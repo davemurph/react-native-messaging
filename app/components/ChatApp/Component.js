@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { ActivityIndicator } from 'react-native'
 
-//import DashboardNavigator from '../DashboardNavigator'
+import DashboardNavigator from '../DashboardNavigator'
 import AuthScreen from '../AuthScreen'
 
 import styles from './Styles'
@@ -13,8 +13,7 @@ const ChatAppComponent = props => {
     return <ActivityIndicator style={styles.activityIndicator} />
   } else {
     if (props.logged) {
-      //return <DashboardNavigator />
-      return null
+      return <DashboardNavigator />
     } else {
       return <AuthScreen />
     }
