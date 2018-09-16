@@ -7,18 +7,21 @@ import styles from './Styles'
 import translations from '../../../../../i18n'
 
 const MESSAGE_TEXT_MARGIN = 50
+const USER_MESSAGE_BACKGROUND_COLOR = '#dcf8c6'
+const OTHER_MESSAGE_BACKGROUND_COLOR = '#ffffff'
 
 const MessageRowComponent = props => {
   const isCurrentUser = props.isCurrentUser
-  const alignItems = isCurrentUser ? 'flex-end' : 'flex-start'
+  const bubbleAlignment = isCurrentUser ? 'flex-end' : 'flex-start'
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN}
+  const messageBackgroundColour = isCurrentUser ? {backgroundColor: USER_MESSAGE_BACKGROUND_COLOR} : {backgroundColor: OTHER_MESSAGE_BACKGROUND_COLOR}
   const username = isCurrentUser ? translations.t('you') : props.message.user.email
   const date = relativeDate(new Date(props.message.createdAt))
   return (
     <View
-      style={styles.container}>
+      style={ [styles.container, {justifyContent: bubbleAlignment}, margin]}>
       <View
-        style={ [styles.bubbleView, {alignItems: alignItems}, margin] }>
+        style={ [styles.bubbleView, {alignItems: bubbleAlignment}, messageBackgroundColour] }>
         <Text
           style={styles.userText} >
           {date + ' - ' + username}

@@ -5,24 +5,22 @@ export default StyleSheet.create({
     flex: 1,
     padding: 8,
     flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#eeeeee',
     borderRadius: 5
   },
   bubbleView: {
     backgroundColor: '#1E90FF',
-    flex: 1,
     borderRadius: 8,
-    padding:8
+    padding:10
   },
   userText: {
-    color: 'white',
+    color: '#777',
     fontSize: 14,
     fontWeight: 'bold'
   },
   messageText: {
     flex: 1,
-    color: 'white',
+    color: 'black',
     fontSize: 16
   }
 })
