@@ -2,6 +2,7 @@ export default {
   login: 'Login',
   signup: 'Sign Up',
  
+  username: 'Username',
   email: 'Email',
   password: 'Password',
  

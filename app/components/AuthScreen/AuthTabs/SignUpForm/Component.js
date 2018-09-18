@@ -8,7 +8,8 @@ import translations from '../../../../i18n'
 const SignUpFormComponent = props =>
   <BasicForm
     buttonTitle={translations.t('signup')}
-    onButtonPress={props.signup} />
+    onButtonPress={props.signup} 
+    isSignUp />
  
 SignUpFormComponent.propTypes = {
   signup: PropTypes.func.isRequired

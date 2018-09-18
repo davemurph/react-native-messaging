@@ -10,7 +10,11 @@ class BasicFormComponent extends Component {
  
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', };
+    this.state = { username: '', email: '', password: '', }
+
+    this.handleUsernameChange = (username) => {
+      this.setState({username: username})
+    }
  
     this.handleEmailChange = (email) => {
       this.setState({email: email})
@@ -21,14 +25,31 @@ class BasicFormComponent extends Component {
     }
  
     this.handleButtonPress = () => {
-      this.props.onButtonPress(this.state.email, this.state.password)
+      this.props.isSignUp ?
+        this.props.onButtonPress(this.state.username, this.state.email, this.state.password) :
+        this.props.onButtonPress(this.state.email, this.state.password)
     }
   }
  
   render() {
+    let usernameField =
+      <TextInput
+        style={styles.textInput}
+        placeholder={translations.t('username')}
+        returnKeyType='next'
+        keyboardType='default'
+        autoCapitalize='none'
+        onChangeText={this.handleUsernameChange}
+        value={this.state.username}
+        underlineColorAndroid={'transparent'} />
+
+    let usernameFieldToDisplay = this.props.isSignUp ? usernameField : null
+
     return (
       <View
         style={styles.container}>
+
+        {usernameFieldToDisplay}
  
         <TextInput
           style={styles.textInput}
@@ -65,6 +86,7 @@ class BasicFormComponent extends Component {
 BasicFormComponent.propTypes = {
   buttonTitle: PropTypes.string.isRequired,
   onButtonPress: PropTypes.func.isRequired,
+  isSignUp: PropTypes.bool
 }
  
 export default BasicFormComponent

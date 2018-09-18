@@ -40,11 +40,11 @@ export const loginUser = (email, password) => {
   }
 }
 
-export const signupUser = (email, password) => {
+export const signupUser = (username, email, password) => {
   return (dispatch) => {
     dispatch(sessionLoading())
 
-    let newUser = {email: email, username: "JOHN"}
+    let newUser = {username: username, email: email}
  
     firebaseService.auth()
       .createUserWithEmailAndPassword(email, password)
