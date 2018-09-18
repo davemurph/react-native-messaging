@@ -3,7 +3,7 @@ export const getChatItems = (messages, users) => {
 
   return messagesKeyArray.map(messageKey => {
     let message = messages[messageKey]
-    let matchingUser = users[message.user]
+    let matchingUser = (users && users.hasOwnProperty(message.user)) ? users[message.user] : null
     let username = (users && matchingUser) ? matchingUser.username : "---"
     message.username = username
     return message
