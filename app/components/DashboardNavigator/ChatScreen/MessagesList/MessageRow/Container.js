@@ -8,7 +8,7 @@ import firebaseService from '../../../../../services/firebase'
 class MessageRowContainer extends Component {
 
   render() {
-    const isCurrentUser = firebaseService.auth().currentUser.email == this.props.message.user.email;
+    const isCurrentUser = firebaseService.auth().currentUser.uid == this.props.message.user;
     return (
       <MessageRow
         message={this.props.message}

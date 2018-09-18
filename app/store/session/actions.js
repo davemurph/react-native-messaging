@@ -1,6 +1,8 @@
 import * as types from './actionTypes'
 import firebaseService from '../../services/firebase'
 
+const FIREBASE_REF_USERS = firebaseService.database().ref('users')
+
 export const restoreSession = () => {
   return (dispatch) => {
     dispatch(sessionRestoring())
@@ -21,7 +23,7 @@ export const restoreSession = () => {
 export const loginUser = (email, password) => {
   return (dispatch) => {
     dispatch(sessionLoading())
- 
+
     firebaseService.auth()
       .signInWithEmailAndPassword(email, password)
       .catch(error => {
@@ -41,9 +43,19 @@ export const loginUser = (email, password) => {
 export const signupUser = (email, password) => {
   return (dispatch) => {
     dispatch(sessionLoading())
+
+    let newUser = {email: email, username: "JOHN"}
  
     firebaseService.auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        var authUser = firebaseService.auth().currentUser
+        FIREBASE_REF_USERS.child(authUser.uid).set(newUser, error => {
+          if (error) {
+            dispatch(sessionError(error.message))
+          }
+        })
+      })
       .catch(error => {
         dispatch(sessionError(error.message));
       })

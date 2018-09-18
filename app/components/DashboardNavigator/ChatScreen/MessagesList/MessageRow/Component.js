@@ -15,7 +15,7 @@ const MessageRowComponent = props => {
   const bubbleAlignment = isCurrentUser ? 'flex-end' : 'flex-start'
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN}
   const messageBackgroundColour = isCurrentUser ? {backgroundColor: USER_MESSAGE_BACKGROUND_COLOR} : {backgroundColor: OTHER_MESSAGE_BACKGROUND_COLOR}
-  const username = isCurrentUser ? translations.t('you') : props.message.user.email
+  const username = isCurrentUser ? translations.t('you') : props.message.username
   const date = relativeDate(new Date(props.message.createdAt))
   return (
     <View
@@ -40,9 +40,7 @@ MessageRowComponent.propTypes = {
   message: PropTypes.shape({
     createdAt: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
-    user: PropTypes.shape({
-      email: PropTypes.string.isRequired
-    })
+    user: PropTypes.string.isRequired
   })
 }
 

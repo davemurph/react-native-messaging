@@ -4,6 +4,7 @@ import ChatScreen from './Component'
 import LogoutButton from './LogoutButton'
  
 import translations from '../../../i18n'
+
  
 class ChatScreenContainer extends Component {
  
@@ -18,5 +19,5 @@ class ChatScreenContainer extends Component {
     )
   }
 }
- 
+
 export default ChatScreenContainer
