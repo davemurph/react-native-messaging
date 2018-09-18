@@ -10,7 +10,7 @@ import styles from './Styles'
 
 const ChatAppComponent = props => {
   if (props.restoring) {
-    return <ActivityIndicator style={styles.activityIndicator} />
+    return <ActivityIndicator style={styles.activityIndicator} size='large' />
   } else {
     if (props.logged) {
       return <DashboardNavigator />
