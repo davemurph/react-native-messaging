@@ -50,7 +50,7 @@ class MessageListComponent extends Component {
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={this.renderItem}
-        getItemLayout={this.itemLayout}
+        //getItemLayout={this.itemLayout}
         ListEmptyComponent={this.emptyList}
         inverted />
     )
