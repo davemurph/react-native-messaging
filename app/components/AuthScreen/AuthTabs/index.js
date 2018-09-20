@@ -1,4 +1,4 @@
-import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
  
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
