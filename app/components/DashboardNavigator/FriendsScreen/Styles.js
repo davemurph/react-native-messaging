@@ -5,6 +5,16 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: '#eeeeee'
+    backgroundColor: '#fff',
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight:10,
   }
+  // content: {
+  //   flex:1,
+  //   paddingTop: 5,
+  //   paddingLeft: 10,
+  //   paddingRight:10,
+  //   backgroundColor: '#fff',
+  // },
 })
