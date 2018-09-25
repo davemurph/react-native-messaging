@@ -9,12 +9,45 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
  
 import ChatScreen from './ChatScreen'
- 
+import ProfileScreen from './ProfileScreen'
+
+const genericStackNavigationOptions = {
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: '#5472a3',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: '500',
+    }
+  },
+}
+
+const ChatStack = createStackNavigator(
+  {
+    ChatListings: () => <Text>ChatListings</Text>
+  },
+  genericStackNavigationOptions
+);
+
+const FriendsStack = createStackNavigator(
+  {
+    Friends: () => <Text>Friends</Text>
+  },
+  genericStackNavigationOptions
+);
+
+const ProfileStack = createStackNavigator(
+  {
+    ProfileScreen: ProfileScreen
+  },
+  genericStackNavigationOptions
+);
 
 const DashboardTabNavigator = createBottomTabNavigator(
-  { ChatListings: () => <Text>ChatListings</Text>,
-    Friends: () => <Text>Friends</Text>,
-    Profile: () => <Text>Profile</Text>,
+  { ChatListings: ChatStack,
+    Friends: FriendsStack,
+    Profile: ProfileStack,
   },
   {
     navigationOptions: ({navigation}) => ({
@@ -46,20 +79,12 @@ const DashboardTabNavigator = createBottomTabNavigator(
 export default createStackNavigator(
 //const AppCardStack = createStackNavigator(
   { 
-    Home: DashboardTabNavigator,
+    DashboardTabNavigator: DashboardTabNavigator,
     ChatScreen: ChatScreen
   },
   {
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: '#5472a3',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: '500',
-      }
-    },
-    initialRouteName: 'Home',
+    headerMode: 'none',
+    initialRouteName: 'DashboardTabNavigator',
   }
 );
 
