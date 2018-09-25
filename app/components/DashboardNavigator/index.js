@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
  
 import ChatScreen from './ChatScreen'
+import ChatListingsScreen from './ChatListingsScreen'
+import FriendsScreen from './FriendsScreen'
 import ProfileScreen from './ProfileScreen'
 
 const genericStackNavigationOptions = {
@@ -23,16 +25,16 @@ const genericStackNavigationOptions = {
   },
 }
 
-const ChatStack = createStackNavigator(
+const ChatListingsStack = createStackNavigator(
   {
-    ChatListings: () => <Text>ChatListings</Text>
+    ChatListings: ChatListingsScreen
   },
   genericStackNavigationOptions
 );
 
 const FriendsStack = createStackNavigator(
   {
-    Friends: () => <Text>Friends</Text>
+    Friends: FriendsScreen
   },
   genericStackNavigationOptions
 );
@@ -45,7 +47,7 @@ const ProfileStack = createStackNavigator(
 );
 
 const DashboardTabNavigator = createBottomTabNavigator(
-  { ChatListings: ChatStack,
+  { ChatListings: ChatListingsStack,
     Friends: FriendsStack,
     Profile: ProfileStack,
   },
