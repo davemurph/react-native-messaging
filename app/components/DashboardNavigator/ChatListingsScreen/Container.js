@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
  
-import ChatListingsComponent from './Component' 
+import NewChatButton from './NewChatButton'
+import ChatListingsComponent from './Component'
  
 class ChatListingsContainer extends Component {
  
@@ -8,6 +9,7 @@ class ChatListingsContainer extends Component {
 
     return {
       title: "My Chats",
+      headerRight: <NewChatButton />
     }
   }
  
