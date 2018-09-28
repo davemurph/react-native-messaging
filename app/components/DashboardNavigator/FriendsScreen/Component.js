@@ -1,15 +1,42 @@
 import React, { Component } from 'react'
 import { Alert, StatusBar, Text, View, FlatList } from 'react-native';
 import { Divider } from 'react-native-elements';
- 
+
+import translations from '../../../i18n'
+
 import FriendsButtonGroup from './FriendsButtonGroup';
 import styles from './Styles'
  
 class FriendsComponent extends Component {
   constructor () {
     super()
+
     this.state = {
       selectedIndex: 0
+    }
+
+    // this.renderItem = ({item}) => {
+    //   return <User
+    //     username={item.username}
+    //     email={item.email}
+    //     avatar={item.avatarUrl}
+    //     onPressUser={() => alert('Hello ' + item.email)}
+    //     isExistingFriend={isShowingFriends}
+    //     onPressAddFriend={() => this.addFriend(item.id, item.username)}
+    //   />
+    // }
+
+    this.renderItem = ({item}) => {
+      return <Text>{item.username}</Text>
+    }
+
+    this.emptyList = () => {
+      return (
+        <Text
+          style={styles.placeholder}>
+          {translations.t('placeholderNoFriends')}
+        </Text>
+      )
     }
   }
 
@@ -41,6 +68,13 @@ class FriendsComponent extends Component {
     const isShowingFriends = this.state.selectedIndex === 0 ? true : false;
     // const data = isShowingFriends ? friendUsers : otherUsers;
 
+    const allUsers = this.props.users
+    const thisUser = this.props.thisUser
+    const friendUsers = thisUser ? allUsers.filter(friendUser => thisUser.friends.includes(friendUser.id)) : []
+    const otherUsers = thisUser ? allUsers.filter(otherUser => !thisUser.friends.includes(otherUser.id)) : []
+    const data = isShowingFriends ? friendUsers : otherUsers
+    const x = thisUser ? thisUser.email : "none"
+
     return ( 
       <View style={styles.container}>
         <StatusBar translucent={false} barStyle="light-content" />
@@ -48,22 +82,16 @@ class FriendsComponent extends Component {
           selectedIndex={this.state.selectedIndex}
           updateIndex={(index) => {this.setState({selectedIndex: index})}}
         />
-        {/* <FlatList
-          keyExtractor={(item, index) => item.id} // TODO: Temp usage of name as key here
+        <Text>USER: {x}</Text>
+        <Text>USERCOUNT: {allUsers.length}</Text>
+        <FlatList
+          keyExtractor={(item, index) => index.toString()} // TODO: get proper key here....
           removeClippedSubviews
           data={data}
-          renderItem={({item}) => (
-            <User
-              username={item.username}
-              email={item.email}
-              avatar={item.avatarUrl}
-              onPressUser={() => alert('Hello ' + item.email)}
-              isExistingFriend={isShowingFriends}
-              onPressAddFriend={() => this.addFriend(item.id, item.username)}
-            />
-          )}
+          renderItem={this.renderItem}
           ItemSeparatorComponent={this.renderSeparator}
-        /> */}
+        ListEmptyComponent={this.emptyList}
+        />
       </View>);
   }
 }

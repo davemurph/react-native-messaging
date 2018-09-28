@@ -14,4 +14,6 @@ export default {
   you: 'You',
  
   placeholder: 'There are no messages yet',
+
+  placeholderNoFriends: 'No friends yet...'
 }

@@ -8,7 +8,10 @@ export const loadUsers = () => {
     dispatch(usersLoading())
     
     FIREBASE_REF_USERS.on('value', (snapshot) => {
-      dispatch(loadUsersSuccess(snapshot.val()))
+      let users = snapshot.val()
+      let authUser = firebaseService.auth().currentUser
+      let thisUser = users[authUser.uid]
+      dispatch(loadUsersSuccess(users, thisUser))
     }, (errorObject) => {
       dispatch(loadUsersError(errorObject.message))
     })
@@ -19,9 +22,10 @@ const usersLoading = () => ({
   type: types.USERS_LOADING
 })
 
-const loadUsersSuccess = users => ({
+const loadUsersSuccess = (users, thisUser) => ({
   type: types.LOAD_USERS_SUCCESS,
-  users
+  users,
+  thisUser
 })
 
 const loadUsersError = error => ({
