@@ -11,7 +11,14 @@ export const loadUsers = () => {
       let users = snapshot.val()
       let authUser = firebaseService.auth().currentUser
       let thisUser = users[authUser.uid]
-      dispatch(loadUsersSuccess(users, thisUser))
+      let thisUserFriends = thisUser.friends ? Object.keys(thisUser.friends) : []
+      let thisUserTransformed = {
+        id: authUser.uid,
+        email: thisUser.email,
+        username: thisUser.username,
+        friends: thisUserFriends
+      }
+       dispatch(loadUsersSuccess(users, thisUserTransformed))
     }, (errorObject) => {
       dispatch(loadUsersError(errorObject.message))
     })

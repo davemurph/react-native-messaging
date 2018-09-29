@@ -60,20 +60,12 @@ class FriendsComponent extends Component {
   };
 
   render() {
-    // const messageStore = this.props.screenProps.messageStore;
-    // const user = messageStore.user;
-    // const allUsers = messageStore.users;
-    // const friendUsers = user ? allUsers.filter(friendUser => user.friends.includes(friendUser.id)) : [];
-    // const otherUsers = user ? allUsers.filter(otherUser => !user.friends.includes(otherUser.id)) : [];
     const isShowingFriends = this.state.selectedIndex === 0 ? true : false;
-    // const data = isShowingFriends ? friendUsers : otherUsers;
-
     const allUsers = this.props.users
     const thisUser = this.props.thisUser
     const friendUsers = thisUser ? allUsers.filter(friendUser => thisUser.friends.includes(friendUser.id)) : []
     const otherUsers = thisUser ? allUsers.filter(otherUser => !thisUser.friends.includes(otherUser.id)) : []
     const data = isShowingFriends ? friendUsers : otherUsers
-    const x = thisUser ? thisUser.email : "none"
 
     return ( 
       <View style={styles.container}>
@@ -82,10 +74,8 @@ class FriendsComponent extends Component {
           selectedIndex={this.state.selectedIndex}
           updateIndex={(index) => {this.setState({selectedIndex: index})}}
         />
-        <Text>USER: {x}</Text>
-        <Text>USERCOUNT: {allUsers.length}</Text>
         <FlatList
-          keyExtractor={(item, index) => index.toString()} // TODO: get proper key here....
+          keyExtractor={(item, index) => item.id}
           removeClippedSubviews
           data={data}
           renderItem={this.renderItem}
