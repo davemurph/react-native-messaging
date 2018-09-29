@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Alert, StatusBar, Text, View, FlatList } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import translations from '../../../i18n'
 
 import FriendsButtonGroup from './FriendsButtonGroup';
+import User from './User'
 import styles from './Styles'
  
 class FriendsComponent extends Component {
@@ -15,20 +17,21 @@ class FriendsComponent extends Component {
       selectedIndex: 0
     }
 
-    // this.renderItem = ({item}) => {
-    //   return <User
-    //     username={item.username}
-    //     email={item.email}
-    //     avatar={item.avatarUrl}
-    //     onPressUser={() => alert('Hello ' + item.email)}
-    //     isExistingFriend={isShowingFriends}
-    //     onPressAddFriend={() => this.addFriend(item.id, item.username)}
-    //   />
-    // }
-
     this.renderItem = ({item}) => {
-      return <Text>{item.username}</Text>
+      let isShowingFriends = this.state.selectedIndex === 0 ? true : false;
+
+      return <User
+        user={item}
+        onPressUser={() => alert('Hello ' + item.email)}
+        isExistingFriend={isShowingFriends}
+        //onPressAddFriend={() => this.addFriend(user.id, user.username)}
+        onPressAddFriend={() => alert("Adding " + item.id + " " + item.username)}
+      />
     }
+
+    // this.renderItem = ({item}) => {
+    //   return <Text>{item.username}</Text>
+    // }
 
     this.emptyList = () => {
       return (
@@ -53,12 +56,6 @@ class FriendsComponent extends Component {
   //   Alert.alert('Well done...', `${friendUsername} is now your friend`)
   // }
 
-  renderSeparator = () => {
-    return (
-      <Divider style={{ backgroundColor: '#888' }} />
-    );
-  };
-
   render() {
     const isShowingFriends = this.state.selectedIndex === 0 ? true : false;
     const allUsers = this.props.users
@@ -79,11 +76,15 @@ class FriendsComponent extends Component {
           removeClippedSubviews
           data={data}
           renderItem={this.renderItem}
-          ItemSeparatorComponent={this.renderSeparator}
-        ListEmptyComponent={this.emptyList}
+          ListEmptyComponent={this.emptyList}
         />
       </View>);
   }
+}
+
+FriendsComponent.propTypes = {
+  users: PropTypes.array.isRequired,
+  thisUser: PropTypes.object
 }
 
 export default FriendsComponent
