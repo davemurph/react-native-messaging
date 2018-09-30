@@ -25,6 +25,27 @@ export const loadUsers = () => {
   }
 }
 
+export const addFriend = (friendId) => {
+  return (dispatch) => {
+    dispatch(usersUpdating())
+
+    let thisUserId = firebaseService.auth().currentUser.uid  
+    let updates = {}
+    updates[thisUserId + '/friends/' + friendId] = true
+    updates[friendId + '/friends/' + thisUserId] = true
+  
+    FIREBASE_REF_USERS.update(updates, error => {
+      // this is an atomic operation
+      if (error) {
+        dispatch(updateUsersError(error))
+      }
+      else {
+        dispatch(updateUsersSuccess())
+      }
+    })
+  }
+}
+
 export const cleanUpUsersOnLogout = () => {
   return (dispatch) => {
     dispatch(sessionLogout())
@@ -43,6 +64,19 @@ const loadUsersSuccess = (users, thisUser) => ({
 
 const loadUsersError = error => ({
   type: types.LOAD_USERS_ERROR,
+  error
+})
+
+const usersUpdating = () => ({
+  type: types.USERS_UPDATING
+})
+
+const updateUsersSuccess = () => ({
+  type: types.UPDATE_USERS_SUCCESS
+})
+
+const updateUsersError = error => ({
+  type: types.UPDATE_USERS_ERROR,
   error
 })
 

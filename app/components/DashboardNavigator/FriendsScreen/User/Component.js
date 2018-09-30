@@ -26,6 +26,7 @@ class UserComponent extends Component {
       onPress={this.props.onPressUser}
       rightIcon={{name:'plus', size:20, color:'#888', type:'feather', style: {marginRight: 0}}}
       onPressRightIcon={this.props.onPressAddFriend}
+      disabled={this.props.isUpdating}
     />
 
     return this.props.isExistingFriend ? friendUserListItem : nonFriendUserListItem
