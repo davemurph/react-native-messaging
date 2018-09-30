@@ -25,6 +25,12 @@ export const loadUsers = () => {
   }
 }
 
+export const cleanUpUsersOnLogout = () => {
+  return (dispatch) => {
+    dispatch(sessionLogout())
+  }
+}
+
 const usersLoading = () => ({
   type: types.USERS_LOADING
 })
