@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
-import { ListItem } from 'react-native-elements'
+import { ListItem, Button } from 'react-native-elements'
 
 class UserComponent extends Component {
   shouldComponentUpdate() {
@@ -10,26 +10,25 @@ class UserComponent extends Component {
   }
 
   render() {
-    let friendUserListItem = <ListItem
-      roundAvatar
-      title={this.props.user.username}
-      subtitle={this.props.user.email}
-      avatar={{uri: this.props.user.avatarUrl}}
-      onPress={this.props.onPressUser}
-    />
+    let button =
+      <Button
+        clear
+        icon={{name:'plus', size:24, color:'#888', type:'feather'}}
+        onPress={this.props.onPressAddFriend}
+        title=''
+        buttonStyle={{width: 40, height: 40}}
+      />
 
-    let nonFriendUserListItem = <ListItem
-      roundAvatar
+    return <ListItem
       title={this.props.user.username}
       subtitle={this.props.user.email}
-      avatar={{uri: this.props.user.avatarUrl}}
+      leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: {uri: this.props.user.avatarUrl}}}
       onPress={this.props.onPressUser}
-      rightIcon={{name:'plus', size:20, color:'#888', type:'feather', style: {marginRight: 0}}}
+      chevron={this.props.isExistingFriend}
+      rightElement={this.props.isExistingFriend ? null : button}
       onPressRightIcon={this.props.onPressAddFriend}
       disabled={this.props.isUpdating}
     />
-
-    return this.props.isExistingFriend ? friendUserListItem : nonFriendUserListItem
   }  
 }
 

@@ -34,12 +34,6 @@ class FriendsComponent extends Component {
       />
     }
 
-    this.renderSeparator = () => {
-      return (
-        <Divider style={{ backgroundColor: '#888' }} />
-      );
-    };
-
     this.emptyList = () => {
       return (
         <Text
@@ -73,7 +67,6 @@ class FriendsComponent extends Component {
           data={data}
           renderItem={this.renderItem}
           ListEmptyComponent={this.emptyList}
-          ItemSeparatorComponent={this.renderSeparator}
         />
       </View>);
   }

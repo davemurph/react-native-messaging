@@ -6,8 +6,9 @@ import { Button } from 'react-native-elements'
 const LogoutButtonComponent = props => {
     return (
       <Button
-        transparent
-        icon={{name: 'sign-out', type: 'font-awesome', size: 24, color: '#eee', style: {marginRight: 0}}}
+        clear
+        title=''
+        icon={{name: 'sign-out', type: 'font-awesome', size: 24, color: '#eee'}}
         onPress={props.logout}
       />
     );

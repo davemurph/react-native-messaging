@@ -8,7 +8,7 @@ export const getUserItems = data => {
       id: key,
       email: user.email,
       username: user.username,
-      avatarUrl: generateAvatarUrl(128, user.email),
+      avatarUrl: generateAvatarUrl(75, user.email),
       friends: friends
     }
     return userTransformed
