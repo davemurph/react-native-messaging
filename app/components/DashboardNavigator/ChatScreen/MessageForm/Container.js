@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
  
-import { sendMessage, updateMessage } from '../../../../store/chat'
+import { sendMessage, updateMessageText } from '../../../../store/chat'
  
 import MessageForm from './Component'
  
@@ -22,13 +22,13 @@ const mapStateToProps = state => ({
  
 const mapDispatchToProps = {
   sendMessage,
-  updateMessage
+  updateMessageText
 }
  
 MessageFormContainer.propTypes = {
   sending: PropTypes.bool.isRequired,
   sendMessage: PropTypes.func.isRequired,
-  updateMessage: PropTypes.func.isRequired,
+  updateMessageText: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   sendingError: PropTypes.string
 }

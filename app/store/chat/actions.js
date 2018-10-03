@@ -6,7 +6,7 @@ const FIREBASE_REF_MESSAGES_LIMIT = 2000
 
 export const sendMessage = message => {
   return (dispatch) => {
-    dispatch(chatMessageLoading())
+    dispatch(chatMessageSending())
 
     let currentUser = firebaseService.auth().currentUser
     let createdAt = new Date().getTime()
@@ -18,17 +18,17 @@ export const sendMessage = message => {
 
     FIREBASE_REF_MESSAGES.push().set(chatMessage, (error) => {
       if (error) {
-        dispatch(chatMessageError(error.message))
+        dispatch(chatSendMessageError(error.message))
       } else {
-        dispatch(chatMessageSuccess())
+        dispatch(chatSendMessageSuccess())
       }
     })
   }
 }
 
-export const updateMessage = text => {
+export const updateMessageText = text => {
   return (dispatch) => {
-    dispatch(chatUpdateMessage(text))
+    dispatch(chatMessageUpdateText(text))
   }
 }
 
@@ -42,21 +42,21 @@ export const loadMessages = () => {
   }
 }
 
-const chatMessageLoading = () => ({
-  type: types.CHAT_MESSAGE_LOADING
+const chatMessageSending = () => ({
+  type: types.CHAT_MESSAGE_SENDING
 })
 
-const chatMessageSuccess = () => ({
-  type: types.CHAT_MESSAGE_SUCCESS
+const chatSendMessageSuccess = () => ({
+  type: types.CHAT_SEND_MESSAGE_SUCCESS
 })
 
-const chatMessageError = error => ({
-  type: types.CHAT_MESSAGE_ERROR,
+const chatSendMessageError = error => ({
+  type: types.CHAT_SEND_MESSAGE_ERROR,
   error
 })
 
-const chatUpdateMessage = text => ({
-  type: types.CHAT_MESSAGE_UPDATE,
+const chatMessageUpdateText = text => ({
+  type: types.CHAT_MESSAGE_UPDATE_TEXT,
   text
 })
 

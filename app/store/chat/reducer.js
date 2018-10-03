@@ -10,13 +10,13 @@ const initialState = {
  
 const chat = (state = initialState, action) => {
   switch(action.type) {
-    case types.CHAT_MESSAGE_LOADING:
+    case types.CHAT_MESSAGE_SENDING:
       return { ...state, sending: true, sendingError: null }
-    case types.CHAT_MESSAGE_ERROR:
+    case types.CHAT_SEND_MESSAGE_ERROR:
       return { ...state, sending: false, sendingError: action.error }
-    case types.CHAT_MESSAGE_SUCCESS:
+    case types.CHAT_SEND_MESSAGE_SUCCESS:
       return { ...state, sending: false, sendingError: null, message: '' }
-    case types.CHAT_MESSAGE_UPDATE:
+    case types.CHAT_MESSAGE_UPDATE_TEXT:
       return { ...state, sending: false, message: action.text, sendingError: null }
     case types.CHAT_LOAD_MESSAGES_SUCCESS:
       return { ...state, messages: action.messages, loadMessagesError: null }
