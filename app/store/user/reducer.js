@@ -11,19 +11,19 @@ const initialState = {
  
 const user = (state = initialState, action) => {
   switch(action.type) {
-    case types.USERS_LOADING:
+    case types.USER_LOADING:
       return { ...state, usersLoading: true }
-    case types.LOAD_USERS_SUCCESS:
+    case types.USER_LOAD_SUCCESS:
       return { usersLoading: false, users: action.users, thisUser: action.thisUser, loadUsersError: null, usersUpdating: false, updateUsersError: null }
-    case types.LOAD_USERS_ERROR:
+    case types.USER_LOAD_ERROR:
       return { usersLoading: false, users: null, thisUser: null, loadUsersError: action.error, usersUpdating: false, updateUsersError: null }
-    case types.USERS_UPDATING:
+    case types.USER_UPDATING:
         return { ...state, usersUpdating: true }
-    case types.UPDATE_USERS_SUCCESS:
+    case types.USER_UPDATE_SUCCESS:
       return { ...state, usersUpdating: false, updateUsersError: null }
-    case types.UPDATE_USERS_ERROR:
+    case types.USER_UPDATE_ERROR:
       return { ...state, usersUpdating: false, updateUsersError: action.error }
-    case types.SESSION_LOGOUT:
+    case types.USER_LOGOUT:
       return initialState
     default:
       return state

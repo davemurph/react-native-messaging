@@ -53,33 +53,33 @@ export const cleanUpUsersOnLogout = () => {
 }
 
 const usersLoading = () => ({
-  type: types.USERS_LOADING
+  type: types.USER_LOADING
 })
 
 const loadUsersSuccess = (users, thisUser) => ({
-  type: types.LOAD_USERS_SUCCESS,
+  type: types.USER_LOAD_SUCCESS,
   users,
   thisUser
 })
 
 const loadUsersError = error => ({
-  type: types.LOAD_USERS_ERROR,
+  type: types.USER_LOAD_ERROR,
   error
 })
 
 const usersUpdating = () => ({
-  type: types.USERS_UPDATING
+  type: types.USER_UPDATING
 })
 
 const updateUsersSuccess = () => ({
-  type: types.UPDATE_USERS_SUCCESS
+  type: types.USER_UPDATE_SUCCESS
 })
 
 const updateUsersError = error => ({
-  type: types.UPDATE_USERS_ERROR,
+  type: types.USER_UPDATE_ERROR,
   error
 })
 
 const sessionLogout = () => ({
-  type: types.SESSION_LOGOUT
+  type: types.USER_LOGOUT
 })
