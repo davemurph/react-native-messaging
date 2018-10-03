@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { KeyboardAvoidingView, Text } from 'react-native'
+import { KeyboardAvoidingView, Text, StatusBar } from 'react-native'
  
 import styles from './Styles'
  
@@ -9,6 +9,7 @@ class ChatListingsComponent extends Component {
       style={styles.container}
       behavior='padding'
       keyboardVerticalOffset={64}>
+      <StatusBar translucent={false} barStyle="light-content" />
       <Text>ChatListings</Text>
   </KeyboardAvoidingView>
   }

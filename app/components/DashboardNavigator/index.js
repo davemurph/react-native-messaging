@@ -12,6 +12,7 @@ import ChatScreen from './ChatScreen'
 import ChatListingsScreen from './ChatListingsScreen'
 import FriendsScreen from './FriendsScreen'
 import ProfileScreen from './ProfileScreen'
+import NewChatModal from './NewChatModal'
 
 const genericStackNavigationOptions = {
   navigationOptions: {
@@ -78,8 +79,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
   }
 )
 
-export default createStackNavigator(
-//const AppCardStack = createStackNavigator(
+const AppCardStack = createStackNavigator(
   { 
     DashboardTabNavigator: DashboardTabNavigator,
     ChatScreen: ChatScreen
@@ -90,34 +90,25 @@ export default createStackNavigator(
   }
 );
 
-// const NewChatModalStack = StackNavigator(
-//   {
-//     NewChatModal: NewChatModal
-//   },
-//   {
-//     navigationOptions: {
-//       headerStyle: {
-//         backgroundColor: '#5472a3',
-//       },
-//       headerTintColor: '#fff',
-//       headerTitleStyle: {
-//         fontWeight: '500',
-//       },
-//     },
-//   }
-// );
+const NewChatModalStack = createStackNavigator(
+  {
+    NewChatModal: NewChatModal
+  },
+  genericStackNavigationOptions
+);
 
-// const AppModalStack = StackNavigator(
-//   {
-//     Main: AppCardStack,
-//     ModalScreen: NewChatModalStack,
-//   },
-//   {
-//     mode: 'modal',
-//     headerMode: 'none',
-//     initialRouteName: 'Main',
-//   }
-// );
+export default AppModalStack = createStackNavigator(
+//const AppModalStack = createStackNavigator(
+  {
+    Main: AppCardStack,
+    ModalScreen: NewChatModalStack,
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+    initialRouteName: 'Main',
+  }
+);
 
 
 

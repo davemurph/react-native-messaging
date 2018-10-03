@@ -6,7 +6,7 @@ import ButtonComponent from './Component'
 const ButtonContainer = props => {
   return (
       <ButtonComponent
-        createNewChat={props.createNewChat()}
+        createNewChat={props.createNewChat}
         disabled={props.disabled}
       />
     )

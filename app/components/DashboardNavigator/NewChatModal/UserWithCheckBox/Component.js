@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
-import { ListItem } from 'react-native-elements'
+import { ListItem, CheckBox } from 'react-native-elements'
 import styles from './Styles'
 
 class UserWithCheckBoxComponent extends Component {
@@ -21,7 +21,7 @@ class UserWithCheckBoxComponent extends Component {
     return (
       <ListItem
         title={this.props.user.username}
-        leftAvatar={{ source: { uri: this.props.user.avatarUrl } }}
+        leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: { uri: this.props.user.avatarUrl } }}
         onPress={() => this.props.toggleUserInList()}
         containerStyle={styles.userWithCheckBox}
         rightElement={<CheckBox

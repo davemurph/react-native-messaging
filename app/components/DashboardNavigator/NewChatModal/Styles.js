@@ -2,13 +2,15 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    backgroundColor: '#fff',
-    paddingTop: 5,
+    flex:1,
+    //justifyContent: 'center',
+    //alignItems: 'stretch',
+    width: '100%',
+    paddingTop: 15,
     paddingLeft: 10,
     paddingRight:10,
+    paddingBottom: 20,
+    backgroundColor: '#fff',
   },
   updatingContainer: {
     display: 'flex',
@@ -20,4 +22,16 @@ export default StyleSheet.create({
     backgroundColor: '#000000',
     opacity: 0.5,
   },
+  input: {
+    width: '100%',
+  },
+  label: {
+    color: '#555'
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#555',
+    marginTop: 15,
+  }
 })

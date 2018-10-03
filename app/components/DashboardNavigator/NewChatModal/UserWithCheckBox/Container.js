@@ -1,28 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import UserComponent from './Component'
+import UserWithCheckBoxComponent from './Component'
 
-class UserContainer extends Component {
+class UserWithCheckBoxContainer extends Component {
 
   render() {
     return (
-      <UserComponent
+      <UserWithCheckBoxComponent
         user={this.props.user}
-        onPressUser={this.props.onPressUser}
-        onPressAddFriend={this.props.onPressAddFriend}
-        isExistingFriend={this.props.isExistingFriend}
-        isUpdating={this.props.isUpdating} />
+        toggleUserInList={this.props.toggleUserInList}
+        userIsAddedToList={this.props.userIsAddedToList}
+        />
     );
   }
 }
 
-UserContainer.propTypes = {
+UserWithCheckBoxContainer.propTypes = {
   user: PropTypes.object.isRequired,
-  onPressUser: PropTypes.func.isRequired,
-  onPressAddFriend: PropTypes.func.isRequired,
-  isExistingFriend: PropTypes.bool.isRequired,
-  isUpdating: PropTypes.bool.isRequired
+  toggleUserInList: PropTypes.func.isRequired,
+  userIsAddedToList: PropTypes.bool.isRequired
 }
 
-export default UserContainer
+export default UserWithCheckBoxContainer

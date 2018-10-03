@@ -17,7 +17,7 @@ const NewChatButtonComponent = props => {
 }
  
 NewChatButtonComponent.propTypes = {
-  showNewChatModal: PropTypes.func.isRequired
+  showNewChatModal: PropTypes.func
 }
  
 export default NewChatButtonComponent
