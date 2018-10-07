@@ -28,7 +28,19 @@ class NewChatModalComponent extends Component {
     this.navigateToChatsScreen = () => {
       const backAction = NavigationActions.back();
       this.props.navigation.dispatch(backAction);
-    };
+    }
+
+    this.handleButtonPress = (user) => {
+      this.props.addChat(this.state.chatName, user.id, user.email, this.state.usersToAdd)
+      if (!this.props.isAddingChat && !this.props.addChatError) {
+        Alert.alert(
+          'Well Done Lad',
+          `New chat "${this.state.chatName}" created`,
+          [{ text: 'OK', onPress: () => {this.props.navigation.dispatch(NavigationActions.back())}}],
+          {onDismiss: () => {this.props.navigation.dispatch(NavigationActions.back())}}
+        )
+      }
+    }
 
     this.state = ({
       chatName: '',
@@ -38,11 +50,7 @@ class NewChatModalComponent extends Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ navigateToChatsScreen: this.navigateToChatsScreen });
-    //const user = this.props.screenProps.messageStore.user;
-    //this.setState({ usersToAdd: [...this.state.usersToAdd, user.id]});
   }
-
-
 
   toggleUserToAdd = (userId) => {
     if (!this.state.usersToAdd.includes(userId)) {
@@ -52,48 +60,6 @@ class NewChatModalComponent extends Component {
       let filteredUsers = this.state.usersToAdd.filter(itemUserId => itemUserId !== userId);
       this.setState({usersToAdd: filteredUsers});
     }
-  }
-
-  insertNewChat = (userId, email, newChatKey) => {
-    // let now = Date.now();
-    // let chatMembersFirebaseObject = {};
-    // this.state.usersToAdd.forEach(userToAdd => {
-    //   chatMembersFirebaseObject[userToAdd] = true;
-    // })
-    // return db.rootRef
-    //   .child('chats/' + newChatKey)
-    //   .set({
-    //       chatName: this.state.chatName,
-    //       lastMessage: "the last message",
-    //       lastModifiedAt: now,
-    //       ownerUserId: userId,
-    //       avatar_url: generateAvatarUrl(128, email),
-    //       createdAt: now,
-    //       members: chatMembersFirebaseObject,
-    //     });
-  }
-
-  insertNewMemberChat = (userId, newChatKey) => {
-    // this.state.usersToAdd.forEach(friendUserId => {
-    //   db.rootRef
-    //     .child('userChats/' + friendUserId)
-    //     .update({[newChatKey]: true});
-    // })
-    // return db.rootRef
-    //   .child('userChats/' + userId)
-    //   .update({[newChatKey]: true});
-  }
-
-  createNewChat = (userId, email) => {
-    // let newChatKey = db.rootRef.child('chats').push().key;
-
-    // this.insertNewChat(userId, email, newChatKey)
-    //   .then(() => this.insertNewMemberChat(userId, newChatKey))
-    //   .then(() => {
-    //     alert('New chat created lad!');
-    //     this._navigateToChatsScreen();
-    //   });
-    alert(userId)
   }
 
   renderSeparator = () => {
@@ -135,9 +101,8 @@ class NewChatModalComponent extends Component {
             ItemSeparatorComponent={this.renderSeparator}
           />
           <CreateNewChatButton
-            //createNewChat={() => this.createNewChat(thisUser.id, thisUser.email)}
-            createNewChat={() => this.createNewChat("", "")}
-            disabled={this.state.usersToAdd.length === 0 || this.state.chatName === ''}
+            createNewChat={() => this.handleButtonPress(thisUser)}
+            disabled={this.state.usersToAdd.length === 0 || this.state.chatName === '' || this.props.isAddingChat}
           />
         </View>
       );

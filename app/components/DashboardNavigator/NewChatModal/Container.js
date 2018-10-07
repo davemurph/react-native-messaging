@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux'
 
+import { addChat } from '../../../store/chat/actions'
 import { loadUsers } from '../../../store/user/actions'
 import { addFriend } from '../../../store/user/actions'
 import { getUserItems } from '../../../store/user/selectors'
@@ -45,8 +46,10 @@ class NewChatContainer extends Component {
           users={users}
           thisUser={this.props.thisUser}
           addFriend={this.props.addFriend}
-          isUpdating={this.props.usersUpdating}
-          navigation={this.props.navigation} />
+          isAddingChat={this.props.isAddingChat}
+          navigation={this.props.navigation}
+          addChat={this.props.addChat}
+          addChatError={this.props.addChatError} />
       </TouchableWithoutFeedback>
     )
   }
@@ -57,13 +60,14 @@ const mapStateToProps = state => ({
   users: state.user.users,
   thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
   loadUsersError: state.user.loadUsersError,
-  usersUpdating: state.user.usersUpdating,
-  updateUsersError: state.user.updateUsersError
+  isAddingChat: state.chat.addingChat,
+  addChatError: state.chat.addChatError
 })
 
 const mapDispatchToProps = {
   loadUsers,
-  addFriend
+  addFriend,
+  addChat
 }
  
 NewChatContainer.propTypes = {
@@ -71,9 +75,10 @@ NewChatContainer.propTypes = {
   users: PropTypes.object,
   thisUser: PropTypes.object,
   loadUsersError: PropTypes.string,
-  usersUpdating: PropTypes.bool.isRequired,
-  updateUsersError: PropTypes.string,
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
+  addChat: PropTypes.func.isRequired,
+  addChatError: PropTypes.string,
+  isAddingChat: PropTypes.bool.isRequired,
 }
  
 export default connect(mapStateToProps, mapDispatchToProps)(NewChatContainer)

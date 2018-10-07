@@ -8,8 +8,7 @@ class ButtonComponent extends Component {
     return (
       <Button
         title='Create Chat'
-        //buttonStyle={styles.buttonInfo}
-        onPress={() => this.props.createNewChat()}
+        onPress={this.props.createNewChat}
         disabled={this.props.disabled} />
     );
   }  
