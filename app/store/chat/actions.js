@@ -47,6 +47,45 @@ export const addChat = (chatTitle, userId, email, memberIds) => {
   }
 }
 
+export const loadChats = () => {
+  return(dispatch) => {
+    let currentUser = firebaseService.auth().currentUser
+    let chats = []
+
+    // FIREBASE_REF.child('userChats/' + currentUser.uid)
+    //   .on('value', userChatsSnap => {
+    //     let userChats = Object.keys(userChatsSnap.val());
+    //     // isInitialChatsLoaded = true;
+    //     console.log(userChats);
+    //     userChats.forEach(chatId => {
+    //       console.log(chatId)
+    //       FIREBASE_REF.child('chats/' + chatId)
+    //         .on('value', chatSnap => {
+    //           chats.push({id: chatSnap.key, chat: chatSnap.val()})
+    //           console.log(chats)
+    //           dispatch(chatLoadChatsSuccess(chats))
+    //       })
+    //     });
+    //   })
+
+      // TODO: FIX THIS FOR PROPER PERFORMANCE!!!
+      FIREBASE_REF.child('userChats/' + currentUser.uid)
+        .on('child_added', userChat => {
+        //let userChats = Object.keys(userChat.val());
+        // isInitialChatsLoaded = true;
+        // console.log(userChat.key);
+
+        FIREBASE_REF.child('chats/' + userChat.key)
+          .on('value', chatSnap => {
+            let chat = {...chatSnap.val(), id: chatSnap.key}
+            // console.log(chat)
+            dispatch(chatLoadChatsSuccess(chat))
+        })
+      })
+
+  }
+}
+
 export const sendMessage = message => {
   return (dispatch) => {
     dispatch(chatMessageSending())
@@ -99,9 +138,9 @@ const chatAddChatError = error => ({
   error
 })
 
-const chatLoadChatsSuccess = chats => ({
+const chatLoadChatsSuccess = chat => ({
   type: types.CHAT_LOAD_CHATS_SUCCESS,
-  chats
+  chat
 })
 
 const chatLoadChatsError = error => ({

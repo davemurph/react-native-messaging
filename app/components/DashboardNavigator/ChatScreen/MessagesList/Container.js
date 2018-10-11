@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { loadUsers } from '../../../../store/user/actions'
 import { loadMessages } from '../../../../store/chat/actions'
 
-import { getChatItems } from '../../../../store/chat/selectors'
+import { getMessages } from '../../../../store/chat/selectors'
 
 import MessageListComponent from './Component'
 
@@ -17,7 +17,7 @@ class MessagesListContainer extends Component {
   }
 
   render() {
-    const messages = getChatItems(this.props.messages, this.props.users).reverse();
+    const messages = getMessages(this.props.messages, this.props.users).reverse();
     return (
       <MessageListComponent
         data={messages} />

@@ -4,7 +4,7 @@ const initialState = {
   // chats
   addingChat: false,
   addChatError: null,
-  chats: {},
+  chats: [],
   loadChatsError: null,
 
   // messages
@@ -25,9 +25,10 @@ const chat = (state = initialState, action) => {
     case types.CHAT_ADD_CHAT_SUCCESS:
       return { ...state, addingChat: false, addChatError: null }
     case types.CHAT_LOAD_CHATS_SUCCESS:
-      return { ...state, chats: action.chats, loadChatsError: null }
+      let chats = [...state.chats, action.chat]
+      return { ...state, chats: chats, loadChatsError: null }
     case types.CHAT_LOAD_CHATS_ERROR:
-      return { ...state, chats: {}, loadChatsError: action.error }
+      return { ...state, chats: [], loadChatsError: action.error }
 
     // messages
     case types.CHAT_SENDING_MESSAGE:

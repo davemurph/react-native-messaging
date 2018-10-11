@@ -1,4 +1,4 @@
-export const getChatItems = (messages, users) => {
+export const getMessages = (messages, users) => {
   let messagesKeyArray = messages ? Object.keys(messages) : [];
 
   return messagesKeyArray.map(messageKey => {
@@ -8,4 +8,9 @@ export const getChatItems = (messages, users) => {
     message.username = username
     return message
   })
+}
+
+
+export const getChats = (chats) => {
+  return chats.sort((a, b) => b.lastModifiedAt - a.lastModifiedAt)
 }

@@ -15,5 +15,7 @@ export default {
  
   placeholder: 'There are no messages yet',
 
-  placeholderNoFriends: 'No friends yet...'
+  placeholderNoFriends: 'No friends yet...',
+
+  placeholderNoChats: 'No chats yet boy...'
 }
