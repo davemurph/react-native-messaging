@@ -31,7 +31,10 @@ class NewChatModalComponent extends Component {
     }
 
     this.handleButtonPress = (user) => {
-      this.props.addChat(this.state.chatName, user.id, user.email, this.state.usersToAdd)
+      const emailForAvatarGeneration = this.state.usersToAdd.length === 1 ?
+        this.props.users.filter(user => user.id === this.state.usersToAdd[0])[0].email :
+        user.email
+      this.props.addChat(this.state.chatName, user.id, emailForAvatarGeneration, this.state.usersToAdd)
       if (!this.props.isAddingChat && !this.props.addChatError) {
         Alert.alert(
           'Well Done Lad',

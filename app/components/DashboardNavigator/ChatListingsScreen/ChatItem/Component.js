@@ -14,7 +14,6 @@ const ChatItemComponent = props => {
         subtitle={props.lastMessage}
         rightSubtitle={lastModifiedAt}
         leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: { uri: props.avatarUrl } }}
-        //rightElement={button}
         onPress={props.onPressChatItem}
         chevron
       />

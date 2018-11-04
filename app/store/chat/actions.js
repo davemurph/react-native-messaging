@@ -7,7 +7,7 @@ const FIREBASE_REF_CHATS = firebaseService.database().ref('chats')
 const FIREBASE_REF_CHATMESSAGES = firebaseService.database().ref('chatMessages')
 const FIREBASE_REF_MESSAGES_LIMIT = 2000
 
-export const addChat = (chatTitle, userId, email, memberIds) => {
+export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) => {
   return (dispatch) => {
     dispatch(chatAddingChat())
 
@@ -23,7 +23,7 @@ export const addChat = (chatTitle, userId, email, memberIds) => {
       lastMessage: "the last message",
       lastModifiedAt: now,
       ownerUserId: userId,
-      avatar_url: generateAvatarUrl(128, email),
+      avatar_url: generateAvatarUrl(128, emailForAvatarGeneration),
       createdAt: now,
       members: chatMembersIds
     }
