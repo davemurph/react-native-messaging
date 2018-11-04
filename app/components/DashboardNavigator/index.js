@@ -47,6 +47,13 @@ const ProfileStack = createStackNavigator(
   genericStackNavigationOptions
 );
 
+const ChatStack = createStackNavigator(
+  {
+    ChatScreen: ChatScreen
+  },
+  genericStackNavigationOptions
+)
+
 const DashboardTabNavigator = createBottomTabNavigator(
   { ChatListings: ChatListingsStack,
     Friends: FriendsStack,
@@ -82,7 +89,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
 const AppCardStack = createStackNavigator(
   { 
     DashboardTabNavigator: DashboardTabNavigator,
-    ChatScreen: ChatScreen
+    Chat: ChatStack
   },
   {
     headerMode: 'none',

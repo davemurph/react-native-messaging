@@ -15,7 +15,7 @@ class MessageFormComponent extends Component {
     super()
  
     this.handleMessageChange = (message) => {
-      this.props.updateMessage(message)
+      this.props.updateMessageText(message)
     }
  
     this.handleButtonPress = () => {
@@ -65,7 +65,7 @@ class MessageFormComponent extends Component {
 MessageFormComponent.propTypes = {
   sending: PropTypes.bool.isRequired,
   sendMessage: PropTypes.func.isRequired,
-  updateMessage: PropTypes.func.isRequired,
+  updateMessageText: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   sendingError: PropTypes.string
 }

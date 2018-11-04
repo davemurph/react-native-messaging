@@ -10,7 +10,6 @@ import { getMessages } from '../../../../store/chat/selectors'
 import MessageListComponent from './Component'
 
 class MessagesListContainer extends Component {
-
   componentDidMount() {
     this.props.loadUsers()
     this.props.loadMessages()

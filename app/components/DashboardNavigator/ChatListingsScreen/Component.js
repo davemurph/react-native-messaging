@@ -17,8 +17,7 @@ class ChatListingsComponent extends Component {
         lastMessage={item.lastMessage}
         avatarUrl={item.avatar_url}
         lastModifiedAt={item.lastModifiedAt}
-        //onPressChatItem={() => this.props.navigation.navigate('Messages')}
-        onPressChatItem={() => alert('Messages')}
+        onPressChatItem={() => this.props.navigation.push('Chat', {chatTitle: item.chatTitle})}
       />
     }
 
@@ -43,7 +42,6 @@ class ChatListingsComponent extends Component {
         </Text>
       )
     }
-
   }
   
 

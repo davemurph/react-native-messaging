@@ -10,7 +10,7 @@ const MessageFormContainer = props =>
   <MessageForm
     sending={props.sending}
     sendMessage={props.sendMessage}
-    updateMessage={props.updateMessage}
+    updateMessageText={props.updateMessageText}
     message={props.message}
     sendingError={props.sendingError} />
  
