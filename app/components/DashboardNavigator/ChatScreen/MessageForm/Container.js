@@ -12,7 +12,8 @@ const MessageFormContainer = props =>
     sendMessage={props.sendMessage}
     updateMessageText={props.updateMessageText}
     message={props.message}
-    sendingError={props.sendingError} />
+    sendingError={props.sendingError}
+    chatId={props.chatId} />
  
 const mapStateToProps = state => ({
   sending: state.chat.sending,
@@ -30,7 +31,8 @@ MessageFormContainer.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   updateMessageText: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  sendingError: PropTypes.string
+  sendingError: PropTypes.string,
+  chatId: PropTypes.string.isRequired
 }
  
 export default connect(mapStateToProps, mapDispatchToProps)(MessageFormContainer)

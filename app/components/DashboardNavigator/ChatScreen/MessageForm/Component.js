@@ -19,7 +19,7 @@ class MessageFormComponent extends Component {
     }
  
     this.handleButtonPress = () => {
-      this.props.sendMessage(this.props.message)
+      this.props.sendMessage(this.props.chatId, this.props.message)
     }
   }
  
@@ -67,7 +67,8 @@ MessageFormComponent.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   updateMessageText: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  sendingError: PropTypes.string
+  sendingError: PropTypes.string,
+  chatId: PropTypes.string.isRequired
 }
  
 export default MessageFormComponent

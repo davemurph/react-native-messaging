@@ -37,7 +37,7 @@ class ChatScreenContainer extends Component {
 
   render() {
     return (
-      <ChatScreen />
+      <ChatScreen chatId={this.props.navigation.getParam('chatId')} />
     )
   }
 }

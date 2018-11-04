@@ -17,7 +17,7 @@ class ChatListingsComponent extends Component {
         lastMessage={item.lastMessage}
         avatarUrl={item.avatar_url}
         lastModifiedAt={item.lastModifiedAt}
-        onPressChatItem={() => this.props.navigation.push('Chat', {chatTitle: item.chatTitle})}
+        onPressChatItem={() => this.props.navigation.push('Chat', {chatId: item.id, chatTitle: item.chatTitle})}
       />
     }
 

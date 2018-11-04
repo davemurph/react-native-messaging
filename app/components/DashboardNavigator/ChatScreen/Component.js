@@ -13,10 +13,14 @@ class ChatScreenComponent extends Component {
       style={styles.container}
       behavior='padding'
       keyboardVerticalOffset={64}>
-    <MessagesList />
-    <MessageForm />
+    <MessagesList chatId={this.props.chatId} />
+    <MessageForm chatId={this.props.chatId} />
   </KeyboardAvoidingView>
   }
+}
+
+ChatScreenComponent.propTypes = {
+  chatId: PropTypes.string.isRequired
 }
 
 export default ChatScreenComponent

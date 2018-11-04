@@ -4,7 +4,7 @@ import generateAvatarUrl from '../../services/avatar'
 
 const FIREBASE_REF = firebaseService.database().ref()
 const FIREBASE_REF_CHATS = firebaseService.database().ref('chats')
-const FIREBASE_REF_MESSAGES = firebaseService.database().ref('messages')
+const FIREBASE_REF_CHATMESSAGES = firebaseService.database().ref('chatMessages')
 const FIREBASE_REF_MESSAGES_LIMIT = 2000
 
 export const addChat = (chatTitle, userId, email, memberIds) => {
@@ -86,7 +86,7 @@ export const loadChats = () => {
   }
 }
 
-export const sendMessage = message => {
+export const sendMessage = (chatId, message) => {
   return (dispatch) => {
     dispatch(chatMessageSending())
 
@@ -98,7 +98,7 @@ export const sendMessage = message => {
       user: currentUser.uid
     }
 
-    FIREBASE_REF_MESSAGES.push().set(chatMessage, (error) => {
+    FIREBASE_REF_CHATMESSAGES.child(chatId).push().set(chatMessage, (error) => {
       if (error) {
         dispatch(chatSendMessageError(error.message))
       } else {
@@ -114,9 +114,9 @@ export const updateMessageText = text => {
   }
 }
 
-export const loadMessages = () => {
+export const loadMessages = chatId => {
   return (dispatch) => {
-    FIREBASE_REF_MESSAGES.limitToLast(FIREBASE_REF_MESSAGES_LIMIT).on('value', (snapshot) => {
+    FIREBASE_REF_CHATMESSAGES.child(chatId).limitToLast(FIREBASE_REF_MESSAGES_LIMIT).on('value', (snapshot) => {
       dispatch(loadMessagesSuccess(snapshot.val()))
     }, (errorObject) => {
       dispatch(loadMessagesError(errorObject.message))

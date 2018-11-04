@@ -12,7 +12,7 @@ import MessageListComponent from './Component'
 class MessagesListContainer extends Component {
   componentDidMount() {
     this.props.loadUsers()
-    this.props.loadMessages()
+    this.props.loadMessages(this.props.chatId)
   }
 
   render() {
@@ -44,7 +44,8 @@ MessagesListContainer.propTypes = {
   usersLoading: PropTypes.bool.isRequired,
   loadUsersError: PropTypes.string,
   loadMessages: PropTypes.func.isRequired,
-  loadUsers: PropTypes.func.isRequired
+  loadUsers: PropTypes.func.isRequired,
+  chatId: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesListContainer)
