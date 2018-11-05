@@ -27,7 +27,7 @@ class ChatListingsComponent extends Component {
           style={{
             height: 1,
             backgroundColor: "#CED0CE",
-            marginLeft: 15,
+            marginLeft: 60,
             marginRight: 15,
           }}
         />

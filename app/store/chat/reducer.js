@@ -25,7 +25,16 @@ const chat = (state = initialState, action) => {
     case types.CHAT_ADD_CHAT_SUCCESS:
       return { ...state, addingChat: false, addChatError: null }
     case types.CHAT_LOAD_CHATS_SUCCESS:
-      let chats = [...state.chats, action.chat]
+      let chats = [] 
+      let existingChatIndex = state.chats.findIndex(chat => chat.id === action.chat.id)
+      if (existingChatIndex === -1) {
+        chats = [...state.chats, action.chat]
+      }
+      else {
+        let chatsWithUpdatedChat = [...state.chats]
+        chatsWithUpdatedChat[existingChatIndex] = action.chat
+        chats = chatsWithUpdatedChat
+      }
       return { ...state, chats: chats, loadChatsError: null }
     case types.CHAT_LOAD_CHATS_ERROR:
       return { ...state, chats: [], loadChatsError: action.error }

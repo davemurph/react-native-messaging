@@ -16,6 +16,7 @@ const ChatItemComponent = props => {
         leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: { uri: props.avatarUrl } }}
         onPress={props.onPressChatItem}
         chevron
+        containerStyle={styles.chatItem}
       />
     );
 }

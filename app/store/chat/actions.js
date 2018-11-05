@@ -98,7 +98,13 @@ export const sendMessage = (chatId, message) => {
       user: currentUser.uid
     }
 
-    FIREBASE_REF_CHATMESSAGES.child(chatId).push().set(chatMessage, (error) => {
+    let updates = {}
+    let newChatMessageKey = FIREBASE_REF_CHATMESSAGES.child(chatId).push().key;
+    updates[`/chats/${chatId}/lastMessage`] = message
+    updates[`/chats/${chatId}/lastModifiedAt`] = createdAt
+    updates[`/chatMessages/${chatId}/${newChatMessageKey}`] = chatMessage
+
+    FIREBASE_REF.update(updates, (error) => {
       if (error) {
         dispatch(chatSendMessageError(error.message))
       } else {
