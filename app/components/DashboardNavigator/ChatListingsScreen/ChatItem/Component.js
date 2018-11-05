@@ -4,14 +4,19 @@ import relativeDate from 'relative-date'
 
 import { ListItem } from 'react-native-elements'
 import styles from './Styles'
+
  
 const ChatItemComponent = props => {
+    const subtitleLimit = 25
     const lastModifiedAt = relativeDate(new Date(props.lastModifiedAt))
+    const subtitle = props.lastMessage.length > subtitleLimit ?
+      `${props.lastMessage.substring(0, subtitleLimit-3)}...` :
+      props.lastMessage
 
     return (
       <ListItem
         title={props.chatTitle}
-        subtitle={props.lastMessage}
+        subtitle={subtitle}
         rightSubtitle={lastModifiedAt}
         leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: { uri: props.avatarUrl } }}
         onPress={props.onPressChatItem}
