@@ -5,6 +5,12 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: '#eeeeee'
+    backgroundColor: '#fff',
+    padding: 15
+  },
+  info: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 10
   }
 })
