@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { KeyboardAvoidingView, Text, StatusBar, View, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 
+import generateAvatarUrl from '../../../services/avatar'
 import ChatItem from './ChatItem' 
 import translations from '../../../i18n'
 
@@ -12,10 +13,22 @@ class ChatListingsComponent extends Component {
     super(props)
 
     this.renderItem = ({item}) => {
+      const isTwoPersonChat = Object.keys(item.members).length === 2
+
+      let otherUserAvatarUrl = ''
+      // TODO: This is not great, should have all users loaded already and no need to check if > 1, which could 
+      // still fail if the actual one you're looking for is not loaded yet
+      if (this.props.users.length > 0 && this.props.thisUser && isTwoPersonChat) {
+        const otherUserId = Object.keys(item.members).filter(id => id !== this.props.thisUser.id)[0]
+        const otherUser = this.props.users.filter(user => user.id === otherUserId)[0]
+        otherUserAvatarUrl = generateAvatarUrl(75, otherUser.email)
+      }
+      
+      const avatarUrl = item.avatar_url && !isTwoPersonChat ? item.avatar_url : otherUserAvatarUrl
       return <ChatItem
         chatTitle={item.chatTitle}
         lastMessage={item.lastMessage}
-        avatarUrl={item.avatar_url}
+        avatarUrl={avatarUrl}
         lastModifiedAt={item.lastModifiedAt}
         onPressChatItem={() => this.props.navigation.push('Chat', {chatId: item.id, chatTitle: item.chatTitle})}
       />
@@ -92,6 +105,7 @@ class ChatListingsComponent extends Component {
 //       </View>);
 
 ChatListingsComponent.propTypes = {
+  users: PropTypes.array,
   data: PropTypes.array.isRequired,
 }
 
