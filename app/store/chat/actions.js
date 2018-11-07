@@ -19,11 +19,11 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
     })
 
     let isGroupChat = memberIds.length > 1 ? true : false
-    let avatarUrl = isGroupChat ? generateAvatarUrl(75, emailForAvatarGeneration, isGroupChat) : null
+    let avatarUrl = isGroupChat ? generateAvatarUrl(50, emailForAvatarGeneration, isGroupChat) : null
 
     let newChat = {
       chatTitle: chatTitle,
-      lastMessage: "the last message",
+      lastMessage: "No messages yet",
       lastModifiedAt: now,
       ownerUserId: userId,
       avatar_url: avatarUrl,

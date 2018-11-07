@@ -64,7 +64,7 @@ class ChatListingsComponent extends Component {
     return (
       <View style={styles.container}>
         <StatusBar translucent={false} barStyle="light-content" />
-        <Text>ChatsCount: {this.props.data.length}</Text>
+        {/* <Text>ChatsCount: {this.props.data.length}</Text> */}
 
         <FlatList
           keyExtractor={(item, index) => index.toString()}
