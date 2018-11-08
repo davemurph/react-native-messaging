@@ -24,7 +24,6 @@ const user = (state = initialState, action) => {
     case types.USER_UPDATE_ERROR:
       return { ...state, usersUpdating: false, updateUsersError: action.error }
     case types.USER_LOGOUT:
-      console.log("IN HERE NOW!!!!!!!!!!!!!!!!!!!")
       return initialState
     default:
       return state
