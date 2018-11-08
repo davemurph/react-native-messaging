@@ -1,8 +1,6 @@
 import * as types from './actionTypes'
 import firebaseService from '../../services/firebase'
 
-import cleanUpUsersOnLogout from '../user/actions'
-
 const FIREBASE_REF_USERS = firebaseService.database().ref('users')
 
 export const restoreSession = () => {
@@ -79,7 +77,6 @@ export const logoutUser = () => {
     firebaseService.auth()
       .signOut()
       .then(() => {
-        cleanUpUsersOnLogout()
         dispatch(sessionLogout())
       })
       .catch(error => {

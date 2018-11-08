@@ -48,6 +48,7 @@ export const addFriend = (friendId) => {
 
 export const cleanUpUsersOnLogout = () => {
   return (dispatch) => {
+    console.log("IN HERE>>>>>>>>")
     dispatch(sessionLogout())
   }
 }

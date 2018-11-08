@@ -133,6 +133,12 @@ export const loadMessages = chatId => {
   }
 }
 
+export const cleanUpChats = () => {
+  return (dispatch) => {
+    dispatch(cleanupOnLogout())
+  }
+}
+
 // chats
 const chatAddingChat = () => ({
   type: types.CHAT_ADDING_CHAT
@@ -184,4 +190,8 @@ const loadMessagesSuccess = messages => ({
 const loadMessagesError = error => ({
   type: types.CHAT_LOAD_MESSAGES_ERROR,
   error
+})
+
+const cleanupOnLogout = () => ({
+  type: types.CHAT_CLEANUP
 })

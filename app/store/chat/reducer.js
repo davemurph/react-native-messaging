@@ -52,6 +52,8 @@ const chat = (state = initialState, action) => {
       return { ...state, messages: action.messages, loadMessagesError: null }
     case types.CHAT_LOAD_MESSAGES_ERROR:
       return { ...state, messages: {}, loadMessagesError: action.error }
+    case types.CHAT_CLEANUP:
+      return initialState
     default:
       return state
   }

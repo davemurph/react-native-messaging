@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Button } from 'react-native-elements'
  
-const LogoutButtonComponent = props => {
+class LogoutButtonComponent extends Component {
+  constructor(props) {
+    super(props)
+
+    this.logoutAndCleanUp = () => {
+      this.props.cleanUpChats();
+      this.props.cleanUpUsersOnLogout();
+      this.props.logout();
+    }
+  }
+
+  render() {
     return (
       <Button
         clear
         title=''
         icon={{name: 'sign-out', type: 'font-awesome', size: 24, color: '#eee'}}
-        onPress={props.logout}
+        onPress={this.logoutAndCleanUp}
       />
     );
+  }
 }
  
 LogoutButtonComponent.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  cleanUpUsersOnLogout: PropTypes.func.isRequired
 }
  
 export default LogoutButtonComponent
