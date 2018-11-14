@@ -7,6 +7,12 @@ const FIREBASE_REF_CHATS = firebaseService.database().ref('chats')
 const FIREBASE_REF_CHATMESSAGES = firebaseService.database().ref('chatMessages')
 const FIREBASE_REF_MESSAGES_LIMIT = 2000
 
+// A 'Thunk' - an action creator that returns function that gets executed by the Redux Thunk middleware
+// Thunk middleware knows how to handle functions.
+// It passes the dispatch method as an argument to the function,
+// thus making it able to dispatch actions itself.
+// The inner function receives the store methods dispatch and getState as parameters
+
 export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) => {
   return (dispatch) => {
     dispatch(chatAddingChat())
@@ -50,6 +56,7 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
   }
 }
 
+// TODO: Pass in userId here to save auth call
 export const loadChats = () => {
   return(dispatch) => {
     let currentUser = firebaseService.auth().currentUser
@@ -138,6 +145,9 @@ export const cleanUpChats = () => {
     dispatch(cleanupOnLogout())
   }
 }
+
+// FROM REDUX DOCS: 'Action Creators' - a function that returns an action object
+// Actions are just plain old Javascript objects
 
 // chats
 const chatAddingChat = () => ({
