@@ -9,30 +9,30 @@ import ChatAppComponent from './Component'
 class ChatAppContainer extends Component {
  
   componentDidMount() {
-    this.props.restore()
+    this.props.restoreSession()
   }
  
   render() {
     return (
       <ChatAppComponent
         restoring={this.props.restoring}
-        logged={this.props.logged} />)
+        isLoggedIn={this.props.isLoggedIn} />)
   }
 }
  
 const mapStateToProps = state => ({
   restoring: state.session.restoring,
-  logged: state.session.user != null,
+  isLoggedIn: state.session.user != null,
 })
  
 const mapDispatchToProps = {
-  restore: restoreSession
+  restoreSession: restoreSession
 }
  
 ChatAppContainer.propTypes = {
   restoring: PropTypes.bool.isRequired,
-  logged: PropTypes.bool.isRequired,
-  restore: PropTypes.func.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  restoreSession: PropTypes.func.isRequired
 }
  
 export default connect(mapStateToProps, mapDispatchToProps)(ChatAppContainer)

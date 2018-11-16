@@ -21,13 +21,13 @@ class AuthScreenComponent extends Component {
     return (
       <View style={styles.container}>
         <AuthTabs />
-        {this.props.loading && <LoadingIndicator />}
+        {this.props.isLoading && <LoadingIndicator />}
       </View>)
   }
 }
  
 AuthScreenComponent.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 }
  

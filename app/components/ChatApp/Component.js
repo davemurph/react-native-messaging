@@ -12,7 +12,7 @@ const ChatAppComponent = props => {
   if (props.restoring) {
     return <ActivityIndicator style={styles.activityIndicator} size='large' />
   } else {
-    if (props.logged) {
+    if (props.isLoggedIn) {
       return <DashboardNavigator />
     } else {
       return <AuthScreen />
@@ -22,7 +22,7 @@ const ChatAppComponent = props => {
 
 ChatAppComponent.propTypes = {
   restoring: PropTypes.bool.isRequired,
-  logged: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 }
  
 export default ChatAppComponent

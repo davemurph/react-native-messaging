@@ -6,16 +6,16 @@ import AuthScreenComponent from './Component'
  
 const AuthScreenContainer = props =>
   <AuthScreenComponent
-    loading={props.loading}
+    isLoading={props.isLoading}
     error={props.error} />
  
 const mapStateToProps = state => ({
-  loading: state.session.loading,
+  isLoading: state.session.isLoading,
   error: state.session.error,
 })
  
 AuthScreenContainer.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 }
  
