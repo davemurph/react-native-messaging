@@ -48,9 +48,8 @@ export const signupUser = (username, email, password) => {
  
     firebaseService.auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        var authUser = firebaseService.auth().currentUser
-        FIREBASE_REF_USERS.child(authUser.uid).set(newUser, error => {
+      .then(userCredential => {
+        FIREBASE_REF_USERS.child(userCredential.user.uid).set(newUser, error => {
           if (error) {
             dispatch(sessionError(error.message))
           }

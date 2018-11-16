@@ -13,7 +13,7 @@ class AuthScreenComponent extends Component {
  
   componentDidUpdate(prevProps) {
     if (!prevProps.error && this.props.error) {
-      Alert.alert(translations.t('error'), this.props.error);
+      Alert.alert(translations.t('error'), this.props.error)
     }
   }
  
