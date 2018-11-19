@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadUsers } from '../../../../store/user/actions'
+import { addUserDBListeners } from '../../../../store/user/actions'
 import { loadMessages } from '../../../../store/chat/actions'
 
 import { getMessages } from '../../../../store/chat/selectors'
@@ -11,7 +11,7 @@ import MessageListComponent from './Component'
 
 class MessagesListContainer extends Component {
   componentDidMount() {
-    this.props.loadUsers()
+    this.props.addUserDBListeners()
     this.props.loadMessages(this.props.chatId)
   }
 
@@ -28,12 +28,12 @@ const mapStateToProps = state => ({
   messages: state.chat.messages,
   loadMessagesError: state.chat.loadMessagesError,
   users: state.user.users,
-  usersLoading: state.user.usersLoading,
-  loadUsersError: state.user.loadUsersError
+  usersIsDBInteracting: state.user.isDBInteracting,
+  usersError: state.user.error
 })
 
 const mapDispatchToProps = {
-  loadUsers,
+  addUserDBListeners,
   loadMessages
 }
 
@@ -41,10 +41,10 @@ MessagesListContainer.propTypes = {
   messages: PropTypes.object,
   loadMessagesError: PropTypes.string,
   users: PropTypes.object,
-  usersLoading: PropTypes.bool.isRequired,
-  loadUsersError: PropTypes.string,
+  usersIsDBInteracting: PropTypes.bool.isRequired,
+  usersError: PropTypes.string,
   loadMessages: PropTypes.func.isRequired,
-  loadUsers: PropTypes.func.isRequired,
+  addUserDBListeners: PropTypes.func.isRequired,
   chatId: PropTypes.string.isRequired
 }
 

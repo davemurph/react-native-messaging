@@ -7,7 +7,7 @@ import ChatListingsComponent from './Component'
 import { connect } from 'react-redux'
 
 import { loadChats } from '../../../store/chat/actions'
-import { loadUsers } from '../../../store/user/actions'
+import { addUserDBListeners } from '../../../store/user/actions'
 import { getChats } from '../../../store/chat/selectors'
 import { getUserItems } from '../../../store/user/selectors'
  
@@ -32,7 +32,7 @@ class ChatListingsContainer extends Component {
 
   componentDidMount() {
     // TODO: UNSUBSCRIBE!!!
-    this.props.loadUsers()
+    this.props.addUserDBListeners()
     this.props.loadChats()
     this.props.navigation.setParams({ navigateToNewChatModal: this.navigateToNewChatModal });
   }
@@ -53,15 +53,15 @@ class ChatListingsContainer extends Component {
 
 const mapStateToProps = state => ({
   chats: state.chat.chats,
-  usersLoading: state.user.usersLoading,
+  usersLoading: state.user.is,
   users: state.user.users,
   thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  loadUsersError: state.user.loadUsersError
+  usersError: state.user.error
 })
 
 const mapDispatchToProps = {
   loadChats,
-  loadUsers
+  addUserDBListeners
 }
  
 ChatListingsContainer.propTypes = {

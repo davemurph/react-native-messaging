@@ -1,28 +1,22 @@
 import * as types from './actionTypes'
  
 const initialState = {
-  usersLoading: false,
-  users: null,
+  isDBInteracting: false,
+  error: null,
+  users: {},
   thisUser: null,
-  loadUsersError: null,
-  usersUpdating: false,
-  updateUsersError: null
 }
  
 const user = (state = initialState, action) => {
   switch(action.type) {
-    case types.USER_LOADING:
-      return { ...state, usersLoading: true }
+    case types.USER_DB_INTERACTING:
+      return { ...state, isDBInteracting: true }
     case types.USER_LOAD_SUCCESS:
-      return { usersLoading: false, users: action.users, thisUser: action.thisUser, loadUsersError: null, usersUpdating: false, updateUsersError: null }
-    case types.USER_LOAD_ERROR:
-      return { usersLoading: false, users: null, thisUser: null, loadUsersError: action.error, usersUpdating: false, updateUsersError: null }
-    case types.USER_UPDATING:
-        return { ...state, usersUpdating: true }
+      return { isDBInteracting: false, users: action.users, thisUser: action.thisUser, error: null }
     case types.USER_UPDATE_SUCCESS:
-      return { ...state, usersUpdating: false, updateUsersError: null }
-    case types.USER_UPDATE_ERROR:
-      return { ...state, usersUpdating: false, updateUsersError: action.error }
+      return { ...state, isDBInteracting: false, error: null }
+    case types.USER_ERROR:
+      return { ...state, isDBInteracting: false, error: action.error }
     case types.USER_LOGOUT:
       return initialState
     default:

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Profile from './Component'
 import LogoutButton from './LogoutButton'
 
-import { loadUsers } from '../../../store/user/actions'
+import { addUserDBListeners } from '../../../store/user/actions'
 
 class ProfileContainer extends Component {
  
@@ -18,7 +18,7 @@ class ProfileContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.loadUsers()
+    this.props.addUserDBListeners()
   }
  
   render() {
@@ -29,19 +29,19 @@ class ProfileContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  usersLoading: state.user.usersLoading,
+  usersIsDBInteracting: state.user.isDBInteracting,
   thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  loadUsersError: state.user.loadUsersError
+  usersError: state.user.error
 })
 
 const mapDispatchToProps = {
-  loadUsers
+  addUserDBListeners
 }
  
 ProfileContainer.propTypes = {
-  usersLoading: PropTypes.bool.isRequired,
+  usersIsDBInteracting: PropTypes.bool.isRequired,
   thisUser: PropTypes.object,
-  loadUsersError: PropTypes.string
+  usersError: PropTypes.string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)

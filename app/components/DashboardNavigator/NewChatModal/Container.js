@@ -7,7 +7,7 @@ import { Button } from 'react-native-elements';
 import { connect } from 'react-redux'
 
 import { addChat } from '../../../store/chat/actions'
-import { loadUsers } from '../../../store/user/actions'
+import { addUserDBListeners } from '../../../store/user/actions'
 import { addFriend } from '../../../store/user/actions'
 import { getUserItems } from '../../../store/user/selectors'
  
@@ -35,7 +35,7 @@ class NewChatContainer extends Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ navigateToChatsScreen: this.navigateToChatsScreen });
-    this.props.loadUsers()
+    this.props.addUserDBListeners()
   }
  
   render() {
@@ -56,25 +56,25 @@ class NewChatContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  usersLoading: state.user.usersLoading,
+  usersIsDBInteracting: state.user.isDBInteracting,
   users: state.user.users,
   thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  loadUsersError: state.user.loadUsersError,
+  usersError: state.user.error,
   isAddingChat: state.chat.addingChat,
   addChatError: state.chat.addChatError
 })
 
 const mapDispatchToProps = {
-  loadUsers,
+  addUserDBListeners,
   addFriend,
   addChat
 }
  
 NewChatContainer.propTypes = {
-  usersLoading: PropTypes.bool.isRequired,
+  usersIsDBInteracting: PropTypes.bool.isRequired,
   users: PropTypes.object,
   thisUser: PropTypes.object,
-  loadUsersError: PropTypes.string,
+  usersError: PropTypes.string,
   navigation: PropTypes.object.isRequired,
   addChat: PropTypes.func.isRequired,
   addChatError: PropTypes.string,

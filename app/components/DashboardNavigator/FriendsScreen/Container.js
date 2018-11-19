@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadUsers } from '../../../store/user/actions'
+import { addUserDBListeners } from '../../../store/user/actions'
 import { addFriend } from '../../../store/user/actions'
 import { getUserItems } from '../../../store/user/selectors'
  
@@ -18,42 +18,38 @@ class FriendsContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.loadUsers()
+    this.props.addUserDBListeners()
   }
  
   render() {
     const users = getUserItems(this.props.users);
-    return (
+    return this.props.usersIsDBInteracting ?
+      <ActivityIndicator style={styles.loadingIndicator} size='large' color={'#888'} /> :
       <FriendsComponent
         users={users}
         thisUser={this.props.thisUser}
         addFriend={this.props.addFriend}
-        isUpdating={this.props.usersUpdating} />
-    )
+        isUpdating={this.props.usersIsDBInteracting} />
   }
 }
 
 const mapStateToProps = state => ({
-  usersLoading: state.user.usersLoading,
+  usersIsDBInteracting: state.user.isDBInteracting,
   users: state.user.users,
   thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  loadUsersError: state.user.loadUsersError,
-  usersUpdating: state.user.usersUpdating,
-  updateUsersError: state.user.updateUsersError
+  usersError: state.user.error
 })
 
 const mapDispatchToProps = {
-  loadUsers,
+  addUserDBListeners,
   addFriend
 }
  
 FriendsContainer.propTypes = {
-  usersLoading: PropTypes.bool.isRequired,
+  usersIsDBInteracting: PropTypes.bool.isRequired,
   users: PropTypes.object,
   thisUser: PropTypes.object,
-  loadUsersError: PropTypes.string,
-  usersUpdating: PropTypes.bool.isRequired,
-  updateUsersError: PropTypes.string
+  usersError: PropTypes.string
 }
  
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsContainer)

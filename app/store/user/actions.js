@@ -3,9 +3,9 @@ import firebaseService from '../../services/firebase'
 
 const FIREBASE_REF_USERS = firebaseService.database().ref('users')
 
-export const loadUsers = () => {
+export const addUserDBListeners = () => {
   return (dispatch) => {
-    dispatch(usersLoading())
+    dispatch(userDBInteracting())
     
     FIREBASE_REF_USERS.on('value', (snapshot) => {
       let users = snapshot.val()
@@ -18,16 +18,16 @@ export const loadUsers = () => {
         username: thisUser.username,
         friends: thisUserFriends
       }
-       dispatch(loadUsersSuccess(users, thisUserTransformed))
+       dispatch(userLoadSuccess(users, thisUserTransformed))
     }, (errorObject) => {
-      dispatch(loadUsersError(errorObject.message))
+      dispatch(userError(errorObject.message))
     })
   }
 }
 
 export const addFriend = (friendId) => {
   return (dispatch) => {
-    dispatch(usersUpdating())
+    dispatch(userDBInteracting())
 
     let thisUserId = firebaseService.auth().currentUser.uid  
     let updates = {}
@@ -37,10 +37,10 @@ export const addFriend = (friendId) => {
     FIREBASE_REF_USERS.update(updates, error => {
       // this is an atomic operation
       if (error) {
-        dispatch(updateUsersError(error))
+        dispatch(userError(error))
       }
       else {
-        dispatch(updateUsersSuccess())
+        dispatch(userUpdateSuccess())
       }
     })
   }
@@ -48,38 +48,29 @@ export const addFriend = (friendId) => {
 
 export const cleanUpUsersOnLogout = () => {
   return (dispatch) => {
-    dispatch(sessionLogout())
+    dispatch(userLogout())
   }
 }
 
-const usersLoading = () => ({
-  type: types.USER_LOADING
+const userDBInteracting = () => ({
+  type: types.USER_DB_INTERACTING
 })
 
-const loadUsersSuccess = (users, thisUser) => ({
+const userLoadSuccess = (users, thisUser) => ({
   type: types.USER_LOAD_SUCCESS,
   users,
   thisUser
 })
 
-const loadUsersError = error => ({
-  type: types.USER_LOAD_ERROR,
-  error
-})
-
-const usersUpdating = () => ({
-  type: types.USER_UPDATING
-})
-
-const updateUsersSuccess = () => ({
+const userUpdateSuccess = () => ({
   type: types.USER_UPDATE_SUCCESS
 })
 
-const updateUsersError = error => ({
-  type: types.USER_UPDATE_ERROR,
+const userError = error => ({
+  type: types.USER_ERROR,
   error
 })
 
-const sessionLogout = () => ({
+const userLogout = () => ({
   type: types.USER_LOGOUT
 })
