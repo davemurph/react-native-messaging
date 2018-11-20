@@ -9,11 +9,11 @@ import AuthScreen from '../AuthScreen'
 import styles from './Styles'
 
 const ChatAppComponent = props => {
-  if (props.restoring) {
+  if (props.restoring || props.usersIsDBInteracting) {
     return <ActivityIndicator style={styles.activityIndicator} size='large' />
   } else {
     if (props.isLoggedIn) {
-      return <DashboardNavigator />
+      return <DashboardNavigator /> 
     } else {
       return <AuthScreen />
     }

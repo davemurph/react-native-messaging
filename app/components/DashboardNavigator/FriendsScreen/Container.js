@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addUserDBListeners } from '../../../store/user/actions'
 import { addFriend } from '../../../store/user/actions'
 import { getUserItems } from '../../../store/user/selectors'
  
@@ -15,10 +14,6 @@ class FriendsContainer extends Component {
     return {
       title: "My Friends",
     }
-  }
-
-  componentDidMount() {
-    this.props.addUserDBListeners()
   }
  
   render() {
@@ -41,7 +36,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  addUserDBListeners,
   addFriend
 }
  

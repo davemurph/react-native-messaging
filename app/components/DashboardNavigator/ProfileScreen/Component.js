@@ -8,7 +8,6 @@ import styles from './Styles'
  
 class ProfileComponent extends Component {
   render() {
-    
     if (this.props.user) {
       return (
         <View style={styles.container}>

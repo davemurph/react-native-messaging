@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
  
 import { restoreSession } from '../../store/session/actions'
- 
+
 import ChatAppComponent from './Component'
  
 class ChatAppContainer extends Component {
@@ -11,7 +11,7 @@ class ChatAppContainer extends Component {
   componentDidMount() {
     this.props.restoreSession()
   }
- 
+
   render() {
     return (
       <ChatAppComponent
@@ -23,10 +23,12 @@ class ChatAppContainer extends Component {
 const mapStateToProps = state => ({
   restoring: state.session.restoring,
   isLoggedIn: state.session.user != null,
+
+
 })
  
 const mapDispatchToProps = {
-  restoreSession: restoreSession
+  restoreSession: restoreSession,
 }
  
 ChatAppContainer.propTypes = {

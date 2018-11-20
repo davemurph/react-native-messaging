@@ -7,7 +7,6 @@ import ChatListingsComponent from './Component'
 import { connect } from 'react-redux'
 
 import { loadChats } from '../../../store/chat/actions'
-import { addUserDBListeners } from '../../../store/user/actions'
 import { getChats } from '../../../store/chat/selectors'
 import { getUserItems } from '../../../store/user/selectors'
  
@@ -32,7 +31,6 @@ class ChatListingsContainer extends Component {
 
   componentDidMount() {
     // TODO: UNSUBSCRIBE!!!
-    this.props.addUserDBListeners()
     this.props.loadChats()
     this.props.navigation.setParams({ navigateToNewChatModal: this.navigateToNewChatModal });
   }
@@ -40,28 +38,27 @@ class ChatListingsContainer extends Component {
   render() {
     const users = getUserItems(this.props.users);
     const chats = getChats(this.props.chats)
-    return (
+    return this.props.isDBInteracting ?
+      <ActivityIndicator style={styles.activityIndicator} size='large' /> :
       <ChatListingsComponent
         users={users}
         thisUser={this.props.thisUser}
         data={chats}
         navigation={this.props.navigation}
       />
-    )
   }
 }
 
 const mapStateToProps = state => ({
   chats: state.chat.chats,
-  usersLoading: state.user.is,
+
   users: state.user.users,
   thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
   usersError: state.user.error
 })
 
 const mapDispatchToProps = {
-  loadChats,
-  addUserDBListeners
+  loadChats: loadChats
 }
  
 ChatListingsContainer.propTypes = {

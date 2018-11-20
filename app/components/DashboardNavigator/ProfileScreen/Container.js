@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import Profile from './Component'
 import LogoutButton from './LogoutButton'
 
-import { addUserDBListeners } from '../../../store/user/actions'
-
 class ProfileContainer extends Component {
  
   static navigationOptions = ({navigation}) => {
@@ -15,10 +13,6 @@ class ProfileContainer extends Component {
       title: "My Profile",
       headerRight: <LogoutButton />
     }
-  }
-
-  componentDidMount() {
-    this.props.addUserDBListeners()
   }
  
   render() {
@@ -29,19 +23,11 @@ class ProfileContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  usersIsDBInteracting: state.user.isDBInteracting,
-  thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  usersError: state.user.error
+  thisUser: state.user.thisUser //TODO: assuming always have a user here?????
 })
-
-const mapDispatchToProps = {
-  addUserDBListeners
-}
  
 ProfileContainer.propTypes = {
-  usersIsDBInteracting: PropTypes.bool.isRequired,
-  thisUser: PropTypes.object,
-  usersError: PropTypes.string
+  thisUser: PropTypes.object
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
+export default connect(mapStateToProps)(ProfileContainer)

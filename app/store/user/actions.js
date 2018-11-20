@@ -18,7 +18,7 @@ export const addUserDBListeners = () => {
         username: thisUser.username,
         friends: thisUserFriends
       }
-       dispatch(userLoadSuccess(users, thisUserTransformed))
+      dispatch(userLoadSuccess(users, thisUserTransformed))
     }, (errorObject) => {
       dispatch(userError(errorObject.message))
     })
