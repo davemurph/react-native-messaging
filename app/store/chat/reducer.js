@@ -35,7 +35,7 @@ const chat = (state = initialState, action) => {
         chatsWithUpdatedChat[existingChatIndex] = action.chat
         chats = chatsWithUpdatedChat
       }
-      return { ...state, chats: chats, loadChatsError: null }
+      return { ...state, addingChat: false, chats: chats, loadChatsError: null }
     case types.CHAT_LOAD_CHATS_ERROR:
       return { ...state, chats: [], loadChatsError: action.error }
 

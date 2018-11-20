@@ -59,6 +59,7 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
 // TODO: Pass in userId here to save auth call
 export const loadChats = () => {
   return(dispatch) => {
+    dispatch(chatAddingChat())
     let currentUser = firebaseService.auth().currentUser
     let chats = []
 

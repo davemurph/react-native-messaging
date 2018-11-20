@@ -5,8 +5,6 @@ import NewChatButton from './NewChatButton'
 import ChatListingsComponent from './Component'
 
 import { connect } from 'react-redux'
-
-import { loadChats } from '../../../store/chat/actions'
 import { getChats } from '../../../store/chat/selectors'
 import { getUserItems } from '../../../store/user/selectors'
  
@@ -31,7 +29,6 @@ class ChatListingsContainer extends Component {
 
   componentDidMount() {
     // TODO: UNSUBSCRIBE!!!
-    this.props.loadChats()
     this.props.navigation.setParams({ navigateToNewChatModal: this.navigateToNewChatModal });
   }
  
@@ -57,13 +54,9 @@ const mapStateToProps = state => ({
   usersError: state.user.error
 })
 
-const mapDispatchToProps = {
-  loadChats: loadChats
-}
- 
 ChatListingsContainer.propTypes = {
   chats: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatListingsContainer)
+export default connect(mapStateToProps)(ChatListingsContainer)
