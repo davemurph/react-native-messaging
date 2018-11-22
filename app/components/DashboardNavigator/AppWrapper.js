@@ -24,8 +24,9 @@ class AppWrapper extends Component {
 const mapStateToProps = state => ({
   usersIsDBInteracting: state.user.isDBInteracting,
   usersError: state.user.error,
+  thisUser: state.user.thisUser,
 
-  isChatsLoading: state.chat.addingChat,
+  isChatsLoading: state.chat.chatsInitialLoading,
   chats: state.chat.chats
 })
 
@@ -38,7 +39,8 @@ AppWrapper.propTypes = {
   isChatsLoading: PropTypes.bool.isRequired,
   chats: PropTypes.array.isRequired,
   usersIsDBInteracting: PropTypes.bool.isRequired,
-  usersError: PropTypes.string
+  usersError: PropTypes.string,
+  thisUser: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppWrapper)

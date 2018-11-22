@@ -28,16 +28,13 @@ class ChatListingsContainer extends Component {
   }
 
   componentDidMount() {
-    // TODO: UNSUBSCRIBE!!!
     this.props.navigation.setParams({ navigateToNewChatModal: this.navigateToNewChatModal });
   }
  
   render() {
     const users = getUserItems(this.props.users);
     const chats = getChats(this.props.chats)
-    return this.props.isDBInteracting ?
-      <ActivityIndicator style={styles.activityIndicator} size='large' /> :
-      <ChatListingsComponent
+    return <ChatListingsComponent
         users={users}
         thisUser={this.props.thisUser}
         data={chats}

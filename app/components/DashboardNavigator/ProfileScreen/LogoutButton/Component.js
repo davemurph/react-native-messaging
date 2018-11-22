@@ -8,7 +8,7 @@ class LogoutButtonComponent extends Component {
     super(props)
 
     this.logoutAndCleanUp = () => {
-      this.props.cleanUpChats();
+      this.props.unloadChats();
       this.props.cleanUpUsersOnLogout();
       this.props.logout();
     }
@@ -28,7 +28,8 @@ class LogoutButtonComponent extends Component {
  
 LogoutButtonComponent.propTypes = {
   logout: PropTypes.func.isRequired,
-  cleanUpUsersOnLogout: PropTypes.func.isRequired
+  cleanUpUsersOnLogout: PropTypes.func.isRequired,
+  unloadChats: PropTypes.func.isRequired
 }
  
 export default LogoutButtonComponent

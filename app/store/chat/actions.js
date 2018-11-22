@@ -12,10 +12,61 @@ const FIREBASE_REF_MESSAGES_LIMIT = 2000
 // It passes the dispatch method as an argument to the function,
 // thus making it able to dispatch actions itself.
 // The inner function receives the store methods dispatch and getState as parameters
+// TODO: Pass in userId here to save auth call?
+export const loadChats = () => {
+  return(dispatch) => {
+    dispatch(chatInitialLoading())
+
+    let currentUser = firebaseService.auth().currentUser
+    let isInitialChatsLoaded = false;
+
+    FIREBASE_REF.child('userChats/' + currentUser.uid)
+      .on('child_added', userChat => {
+        if (isInitialChatsLoaded) {
+          FIREBASE_REF.child('chats/' + userChat.key)
+          .on('value', chatSnap => {
+            if (isInitialChatsLoaded) {
+              let chat = {id: chatSnap.key, ...chatSnap.val()}
+              dispatch(chatLoaded(chat))
+            }
+          })
+        }
+      })
+
+    FIREBASE_REF.child('userChats/' + currentUser.uid)
+      .once('value').then(userChatsSnapshot => {
+        if (userChatsSnapshot.exists()) {
+          // if user has existing chats
+          let userChatIds = Object.keys(userChatsSnapshot.val());
+          let userChatIdsCount = userChatIds.length
+          let counter = 1
+
+          userChatIds.forEach(chatId => {
+            FIREBASE_REF.child('chats/' + chatId)
+              .on('value', chatSnapshot => {
+                let chat = {id: chatSnapshot.key, ...chatSnapshot.val()}
+                dispatch(chatLoaded(chat))
+                if (counter != userChatIdsCount) {
+                  counter++
+                } else {
+                  isInitialChatsLoaded = true
+                  dispatch(chatInitialLoaded())
+                }
+            })
+          })
+        } else {
+          // if user has no chats
+          isInitialChatsLoaded = true
+          dispatch(chatInitialLoaded())
+        }
+      })
+  }
+}
+
 
 export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) => {
   return (dispatch) => {
-    dispatch(chatAddingChat())
+    dispatch(chatAdding())
 
     let now = Date.now()
     let memberIdsIncludingThisUser = memberIds.concat(userId)
@@ -47,7 +98,7 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
     FIREBASE_REF.update(updates, error => {
       // this is an atomic operation
       if (error) {
-        dispatch(chatAddChatError(error))
+        dispatch(chatError(error))
       }
       else {
         dispatch(chatAddChatSuccess())
@@ -56,46 +107,6 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
   }
 }
 
-// TODO: Pass in userId here to save auth call
-export const loadChats = () => {
-  return(dispatch) => {
-    dispatch(chatAddingChat())
-    let currentUser = firebaseService.auth().currentUser
-    let chats = []
-
-    // FIREBASE_REF.child('userChats/' + currentUser.uid)
-    //   .on('value', userChatsSnap => {
-    //     let userChats = Object.keys(userChatsSnap.val());
-    //     // isInitialChatsLoaded = true;
-    //     console.log(userChats);
-    //     userChats.forEach(chatId => {
-    //       console.log(chatId)
-    //       FIREBASE_REF.child('chats/' + chatId)
-    //         .on('value', chatSnap => {
-    //           chats.push({id: chatSnap.key, chat: chatSnap.val()})
-    //           console.log(chats)
-    //           dispatch(chatLoadChatsSuccess(chats))
-    //       })
-    //     });
-    //   })
-
-      // TODO: FIX THIS FOR PROPER PERFORMANCE!!!
-      FIREBASE_REF.child('userChats/' + currentUser.uid)
-        .on('child_added', userChat => {
-        //let userChats = Object.keys(userChat.val());
-        // isInitialChatsLoaded = true;
-        // console.log(userChat.key);
-
-        FIREBASE_REF.child('chats/' + userChat.key)
-          .on('value', chatSnap => {
-            let chat = {...chatSnap.val(), id: chatSnap.key}
-            // console.log(chat)
-            dispatch(chatLoadChatsSuccess(chat))
-        })
-      })
-
-  }
-}
 
 export const sendMessage = (chatId, message) => {
   return (dispatch) => {
@@ -141,38 +152,42 @@ export const loadMessages = chatId => {
   }
 }
 
-export const cleanUpChats = () => {
+export const unloadChats = () => {
   return (dispatch) => {
-    dispatch(cleanupOnLogout())
+    dispatch(chatLogout())
   }
 }
 
 // FROM REDUX DOCS: 'Action Creators' - a function that returns an action object
 // Actions are just plain old Javascript objects
-
 // chats
-const chatAddingChat = () => ({
-  type: types.CHAT_ADDING_CHAT
+const chatInitialLoading = () => ({
+  type: types.CHAT_INITIAL_LOADING
 })
 
-const chatAddChatSuccess = () => ({
-  type: types.CHAT_ADD_CHAT_SUCCESS
+const chatInitialLoaded = () => ({
+  type: types.CHAT_INITIAL_LOADED
 })
 
-const chatAddChatError = error => ({
-  type: types.CHAT_ADD_CHAT_ERROR,
-  error
-})
-
-const chatLoadChatsSuccess = chat => ({
-  type: types.CHAT_LOAD_CHATS_SUCCESS,
+const chatLoaded = chat => ({
+  type: types.CHAT_LOADED,
   chat
 })
 
-const chatLoadChatsError = error => ({
-  type: types.CHAT_LOAD_CHATS_ERROR,
+const chatAdding = () => ({
+  type: types.CHAT_ADDING
+})
+
+const chatError = error => ({
+  type: types.CHAT_ADD_ERROR,
   error
 })
+
+const chatLogout = () => ({
+  type: types.CHAT_LOGOUT
+})
+
+
 
 // messages
 const chatMessageSending = () => ({
@@ -203,6 +218,3 @@ const loadMessagesError = error => ({
   error
 })
 
-const cleanupOnLogout = () => ({
-  type: types.CHAT_CLEANUP
-})

@@ -2,10 +2,10 @@ import * as types from './actionTypes'
  
 const initialState = {
   // chats
-  addingChat: false,
-  addChatError: null,
+  chatsInitialLoading: false,
+  isAddingChat: false,
   chats: [],
-  loadChatsError: null,
+  error: null,
 
   // messages
   sending: false,
@@ -18,13 +18,11 @@ const initialState = {
 const chat = (state = initialState, action) => {
   switch(action.type) {
     // chats
-    case types.CHAT_ADDING_CHAT:
-      return { ...state, addingChat: true, addChatError: null }
-    case types.CHAT_ADD_CHAT_ERROR:
-      return { ...state, addingChat: false, addChatError: action.error }
-    case types.CHAT_ADD_CHAT_SUCCESS:
-      return { ...state, addingChat: false, addChatError: null }
-    case types.CHAT_LOAD_CHATS_SUCCESS:
+    case types.CHAT_INITIAL_LOADING:
+      return { ...state, chatsInitialLoading: true }
+    case types.CHAT_INITIAL_LOADED:
+      return { ...state, chatsInitialLoading: false }
+    case types.CHAT_LOADED:
       let chats = [] 
       let existingChatIndex = state.chats.findIndex(chat => chat.id === action.chat.id)
       if (existingChatIndex === -1) {
@@ -35,9 +33,17 @@ const chat = (state = initialState, action) => {
         chatsWithUpdatedChat[existingChatIndex] = action.chat
         chats = chatsWithUpdatedChat
       }
-      return { ...state, addingChat: false, chats: chats, loadChatsError: null }
-    case types.CHAT_LOAD_CHATS_ERROR:
-      return { ...state, chats: [], loadChatsError: action.error }
+      return { ...state, chats: chats }
+    case types.CHAT_ADDING:
+      return { ...state, addingChat: true, addChatError: null }
+      case types.CHAT_ADD_SUCCESS:
+        return { ...state, addingChat: false, addChatError: null }
+    case types.CHAT_ADD_ERROR:
+      return { ...state, addingChat: false, addChatError: action.error }
+    case types.CHAT_LOGOUT:
+      return initialState
+
+
 
     // messages
     case types.CHAT_SENDING_MESSAGE:
@@ -52,8 +58,7 @@ const chat = (state = initialState, action) => {
       return { ...state, messages: action.messages, loadMessagesError: null }
     case types.CHAT_LOAD_MESSAGES_ERROR:
       return { ...state, messages: {}, loadMessagesError: action.error }
-    case types.CHAT_CLEANUP:
-      return initialState
+
     default:
       return state
   }
