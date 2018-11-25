@@ -5,7 +5,6 @@ import generateAvatarUrl from '../../services/avatar'
 const FIREBASE_REF = firebaseService.database().ref()
 const FIREBASE_REF_CHATS = firebaseService.database().ref('chats')
 
-
 // A 'Thunk' - an action creator that returns function that gets executed by the Redux Thunk middleware
 // Thunk middleware knows how to handle functions.
 // It passes the dispatch method as an argument to the function,
@@ -62,7 +61,6 @@ export const loadChats = () => {
   }
 }
 
-
 export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) => {
   return (dispatch) => {
     dispatch(chatAdding())
@@ -106,9 +104,6 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
   }
 }
 
-
-
-
 export const unloadChats = () => {
   return (dispatch) => {
     dispatch(chatLogout())
@@ -132,6 +127,10 @@ const chatLoaded = chat => ({
 
 const chatAdding = () => ({
   type: types.CHAT_ADDING
+})
+
+const chatAddChatSuccess = () => ({
+  type: types.CHAT_ADD_SUCCESS
 })
 
 const chatError = error => ({

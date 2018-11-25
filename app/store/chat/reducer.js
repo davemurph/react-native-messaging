@@ -26,11 +26,11 @@ const chat = (state = initialState, action) => {
       }
       return { ...state, chats: chats }
     case types.CHAT_ADDING:
-      return { ...state, addingChat: true, error: null }
+      return { ...state, isAddingChat: true, error: null }
       case types.CHAT_ADD_SUCCESS:
-        return { ...state, addingChat: false, error: null }
+        return { ...state, isAddingChat: false, error: null }
     case types.CHAT_ADD_ERROR:
-      return { ...state, addingChat: false, error: action.error }
+      return { ...state, isAddingChat: false, error: action.error }
     case types.CHAT_LOGOUT:
       return initialState
     default:

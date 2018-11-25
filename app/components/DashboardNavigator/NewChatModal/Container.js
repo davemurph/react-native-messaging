@@ -55,8 +55,8 @@ class NewChatContainer extends Component {
 
 const mapStateToProps = state => ({
   users: state.user.users,
-  thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  isAddingChat: state.chat.addingChat,
+  thisUser: state.user.thisUser,
+  isAddingChat: state.chat.isAddingChat,
   addChatError: state.chat.addChatError
 })
 
