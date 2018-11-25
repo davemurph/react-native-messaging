@@ -4,8 +4,7 @@ import generateAvatarUrl from '../../services/avatar'
 
 const FIREBASE_REF = firebaseService.database().ref()
 const FIREBASE_REF_CHATS = firebaseService.database().ref('chats')
-const FIREBASE_REF_CHATMESSAGES = firebaseService.database().ref('chatMessages')
-const FIREBASE_REF_MESSAGES_LIMIT = 2000
+
 
 // A 'Thunk' - an action creator that returns function that gets executed by the Redux Thunk middleware
 // Thunk middleware knows how to handle functions.
@@ -18,7 +17,7 @@ export const loadChats = () => {
     dispatch(chatInitialLoading())
 
     let currentUser = firebaseService.auth().currentUser
-    let isInitialChatsLoaded = false;
+    let isInitialChatsLoaded = false
 
     FIREBASE_REF.child('userChats/' + currentUser.uid)
       .on('child_added', userChat => {
@@ -108,49 +107,7 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
 }
 
 
-export const sendMessage = (chatId, message) => {
-  return (dispatch) => {
-    dispatch(chatMessageSending())
 
-    let currentUser = firebaseService.auth().currentUser
-    let createdAt = new Date().getTime()
-    let chatMessage = {
-      text: message,
-      createdAt: createdAt,
-      user: currentUser.uid
-    }
-
-    let updates = {}
-    let newChatMessageKey = FIREBASE_REF_CHATMESSAGES.child(chatId).push().key;
-    updates[`/chats/${chatId}/lastMessage`] = message
-    updates[`/chats/${chatId}/lastModifiedAt`] = createdAt
-    updates[`/chatMessages/${chatId}/${newChatMessageKey}`] = chatMessage
-
-    FIREBASE_REF.update(updates, (error) => {
-      if (error) {
-        dispatch(chatSendMessageError(error.message))
-      } else {
-        dispatch(chatSendMessageSuccess())
-      }
-    })
-  }
-}
-
-export const updateMessageText = text => {
-  return (dispatch) => {
-    dispatch(chatMessageUpdateText(text))
-  }
-}
-
-export const loadMessages = chatId => {
-  return (dispatch) => {
-    FIREBASE_REF_CHATMESSAGES.child(chatId).limitToLast(FIREBASE_REF_MESSAGES_LIMIT).on('value', (snapshot) => {
-      dispatch(loadMessagesSuccess(snapshot.val()))
-    }, (errorObject) => {
-      dispatch(loadMessagesError(errorObject.message))
-    })
-  }
-}
 
 export const unloadChats = () => {
   return (dispatch) => {
@@ -160,7 +117,6 @@ export const unloadChats = () => {
 
 // FROM REDUX DOCS: 'Action Creators' - a function that returns an action object
 // Actions are just plain old Javascript objects
-// chats
 const chatInitialLoading = () => ({
   type: types.CHAT_INITIAL_LOADING
 })
@@ -186,35 +142,3 @@ const chatError = error => ({
 const chatLogout = () => ({
   type: types.CHAT_LOGOUT
 })
-
-
-
-// messages
-const chatMessageSending = () => ({
-  type: types.CHAT_SENDING_MESSAGE
-})
-
-const chatSendMessageSuccess = () => ({
-  type: types.CHAT_SEND_MESSAGE_SUCCESS
-})
-
-const chatSendMessageError = error => ({
-  type: types.CHAT_SEND_MESSAGE_ERROR,
-  error
-})
-
-const chatMessageUpdateText = text => ({
-  type: types.CHAT_MESSAGE_UPDATE_TEXT,
-  text
-})
-
-const loadMessagesSuccess = messages => ({
-  type: types.CHAT_LOAD_MESSAGES_SUCCESS,
-  messages
-})
-
-const loadMessagesError = error => ({
-  type: types.CHAT_LOAD_MESSAGES_ERROR,
-  error
-})
-

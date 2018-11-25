@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadMessages } from '../../../../store/chat/actions'
-
-import { getMessages } from '../../../../store/chat/selectors'
+import { loadMessages } from '../../../../store/message'
+import { getMessages } from '../../../../store/message/selectors'
 
 import MessageListComponent from './Component'
 
@@ -23,8 +22,8 @@ class MessagesListContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  messages: state.chat.messages,
-  loadMessagesError: state.chat.loadMessagesError,
+  messages: state.message.messages,
+  loadMessagesError: state.message.loadMessagesError,
   users: state.user.users,
 })
 
