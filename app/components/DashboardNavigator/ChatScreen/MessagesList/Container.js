@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadMessages } from '../../../../store/message'
+import { loadMessages, resetMessages } from '../../../../store/message'
 import { getMessages } from '../../../../store/message/selectors'
 
 import MessageListComponent from './Component'
@@ -10,6 +10,10 @@ import MessageListComponent from './Component'
 class MessagesListContainer extends Component {
   componentDidMount() {
     this.props.loadMessages(this.props.chatId)
+  }
+
+  componentWillUnmount() {
+    this.props.resetMessages()
   }
 
   render() {
@@ -28,7 +32,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  loadMessages
+  loadMessages,
+  resetMessages
 }
 
 MessagesListContainer.propTypes = {
@@ -36,6 +41,7 @@ MessagesListContainer.propTypes = {
   loadMessagesError: PropTypes.string,
   users: PropTypes.object,
   loadMessages: PropTypes.func.isRequired,
+  resetMessages: PropTypes.func.isRequired,
   chatId: PropTypes.string.isRequired
 }
 

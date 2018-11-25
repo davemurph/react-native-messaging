@@ -22,6 +22,8 @@ const message = (state = initialState, action) => {
       return { ...state, sending: false, sendingError: null, message: '' }
     case types.MESSAGE_SEND_ERROR:
       return { ...state, sending: false, sendingError: action.error }
+    case types.MESSAGE_RESET:
+      return initialState
     default:
       return state
   }

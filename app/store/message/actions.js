@@ -49,6 +49,12 @@ export const sendMessage = (chatId, message) => {
   }
 }
 
+export const resetMessages = () => {
+  return (dispatch) => {
+    dispatch(messageReset())
+  }
+}
+
 const messageLoadSuccess = messages => ({
   type: types.MESSAGE_LOAD_SUCCESS,
   messages
@@ -75,4 +81,8 @@ const messageSendSuccess = () => ({
 const messasgeSendError = error => ({
   type: types.MESSAGE_SEND_ERROR,
   error
+})
+
+const messageReset = () => ({
+  type: types.MESSAGE_RESET
 })

@@ -48,7 +48,7 @@ class MessageListComponent extends Component {
         style={styles.container}
         contentContainerStyle={contentContainerStyle}
         data={data}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id}
         renderItem={this.renderItem}
         //getItemLayout={this.itemLayout}
         ListEmptyComponent={this.emptyList}

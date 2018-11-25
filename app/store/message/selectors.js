@@ -6,6 +6,6 @@ export const getMessages = (messages, users) => {
     let matchingUser = (users && users.hasOwnProperty(message.user)) ? users[message.user] : null
     let username = (users && matchingUser) ? matchingUser.username : "---"
     message.username = username
-    return message
+    return {id: messageKey, ...message}
   })
 }
