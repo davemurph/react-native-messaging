@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadMessages, resetMessages } from '../../../../store/message'
+import { loadMessages, unsubscribeAndResetMessages } from '../../../../store/message'
 import { getMessages } from '../../../../store/message/selectors'
 
 import MessageListComponent from './Component'
@@ -13,7 +13,7 @@ class MessagesListContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetMessages()
+    this.props.unsubscribeAndResetMessages(this.props.subscription)
   }
 
   render() {
@@ -28,20 +28,22 @@ class MessagesListContainer extends Component {
 const mapStateToProps = state => ({
   messages: state.message.messages,
   loadMessagesError: state.message.loadMessagesError,
-  users: state.user.users,
+  subscription: state.message.subscription,
+  users: state.user.users
 })
 
 const mapDispatchToProps = {
   loadMessages,
-  resetMessages
+  unsubscribeAndResetMessages
 }
 
 MessagesListContainer.propTypes = {
   messages: PropTypes.object,
   loadMessagesError: PropTypes.string,
+  subscription: PropTypes.object,
   users: PropTypes.object,
   loadMessages: PropTypes.func.isRequired,
-  resetMessages: PropTypes.func.isRequired,
+  unsubscribeAndResetMessages: PropTypes.func.isRequired,
   chatId: PropTypes.string.isRequired
 }
 

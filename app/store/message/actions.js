@@ -3,15 +3,18 @@ import firebaseService from '../../services/firebase'
 
 const FIREBASE_REF = firebaseService.database().ref()
 const FIREBASE_REF_CHATMESSAGES = firebaseService.database().ref('chatMessages')
-const FIREBASE_REF_MESSAGES_LIMIT = 2000
+const FIREBASE_REF_MESSAGES_LIMIT = 30
 
 export const loadMessages = chatId => {
   return (dispatch) => {
-    FIREBASE_REF_CHATMESSAGES.child(chatId).limitToLast(FIREBASE_REF_MESSAGES_LIMIT).on('value', (snapshot) => {
+    let ref = FIREBASE_REF_CHATMESSAGES.child(chatId)
+    let unsubscribe = ref.limitToLast(FIREBASE_REF_MESSAGES_LIMIT).on('value', (snapshot) => {
       dispatch(messageLoadSuccess(snapshot.val()))
     }, (errorObject) => {
       dispatch(messageLoadError(errorObject.message))
     })
+
+    dispatch(messageSubscriptionAdded({ref, unsubscribe}))
   }
 }
 
@@ -49,8 +52,9 @@ export const sendMessage = (chatId, message) => {
   }
 }
 
-export const resetMessages = () => {
+export const unsubscribeAndResetMessages = (subscription) => {
   return (dispatch) => {
+    subscription.ref.off('value', subscription.unsubscribe)
     dispatch(messageReset())
   }
 }
@@ -63,6 +67,11 @@ const messageLoadSuccess = messages => ({
 const messageLoadError = error => ({
   type: types.MESSAGE_LOAD_ERROR,
   error
+})
+
+const messageSubscriptionAdded = subscription => ({
+  type: types.MESSAGE_SUBSCRIPTION_ADDED,
+  subscription
 })
 
 const messageUpdateText = text => ({

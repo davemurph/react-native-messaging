@@ -5,7 +5,8 @@ const initialState = {
   messages: {},
   loadMessagesError: null,
   sending: false,
-  sendingError: null
+  sendingError: null,
+  subscription: null
 }
 
 const message = (state = initialState, action) => {
@@ -14,6 +15,8 @@ const message = (state = initialState, action) => {
       return { ...state, messages: action.messages, loadMessagesError: null }
     case types.MESSAGE_LOAD_ERROR:
       return { ...state, messages: {}, loadMessagesError: action.error }
+    case types.MESSAGE_SUBSCRIPTION_ADDED:
+      return { ...state, subscription: action.subscription }
     case types.MESSAGE_UPDATE_TEXT:
       return { ...state, sending: false, message: action.text, sendingError: null }
     case types.MESSAGE_SENDING:
