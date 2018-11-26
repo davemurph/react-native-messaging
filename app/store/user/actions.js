@@ -7,7 +7,7 @@ export const addUserDBListeners = () => {
   return (dispatch) => {
     dispatch(userDBInteracting())
     
-    FIREBASE_REF_USERS.on('value', (snapshot) => {
+    let unsubscribe = FIREBASE_REF_USERS.on('value', (snapshot) => {
       let users = snapshot.val()
       let authUser = firebaseService.auth().currentUser
       let thisUser = users[authUser.uid]
@@ -22,6 +22,8 @@ export const addUserDBListeners = () => {
     }, (errorObject) => {
       dispatch(userError(errorObject.message))
     })
+
+    dispatch(userSubscriptionAdded({ref: FIREBASE_REF_USERS, unsubscribe}))
   }
 }
 
@@ -46,8 +48,9 @@ export const addFriend = (friendId) => {
   }
 }
 
-export const cleanUpUsersOnLogout = () => {
+export const cleanUpUsersOnLogout = (subscription) => {
   return (dispatch) => {
+    subscription.ref.off('value', subscription.unsubscribe)
     dispatch(userLogout())
   }
 }
@@ -64,6 +67,11 @@ const userLoadSuccess = (users, thisUser) => ({
 
 const userUpdateSuccess = () => ({
   type: types.USER_UPDATE_SUCCESS
+})
+
+const userSubscriptionAdded = subscription => ({
+  type: types.USER_SUBSCRIPTION_ADDED,
+  subscription
 })
 
 const userError = error => ({
