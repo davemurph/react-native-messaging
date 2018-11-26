@@ -11,12 +11,13 @@ import LogoutButton from './Component'
 const LogoutButtonContainer = props =>
   <LogoutButton
     logout={props.logout}
-    cleanUpUsersOnLogout={() => props.cleanUpUsersOnLogout(props.subscription)}
-    unloadChats={props.unloadChats}
+    cleanUpUsersOnLogout={() => props.cleanUpUsersOnLogout(props.userSubscription)}
+    unloadChats={() => props.unloadChats(props.chatSubscriptions)}
   />
 
 const mapStateToProps = state => ({
-  subscription: state.user.subscription
+  userSubscription: state.user.subscription,
+  chatSubscriptions: state.chat.subscriptions
 })
 
 const mapDispatchToProps = {
@@ -28,7 +29,9 @@ const mapDispatchToProps = {
 LogoutButtonContainer.propTypes = {
   logout: PropTypes.func.isRequired,
   cleanUpUsersOnLogout: PropTypes.func.isRequired,
-  unloadChats: PropTypes.func.isRequired
+  unloadChats: PropTypes.func.isRequired,
+  userSubscription: PropTypes.object,
+  chatSubscriptions: PropTypes.array
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogoutButtonContainer)

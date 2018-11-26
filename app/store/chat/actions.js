@@ -18,18 +18,21 @@ export const loadChats = () => {
     let currentUser = firebaseService.auth().currentUser
     let isInitialChatsLoaded = false
 
-    FIREBASE_REF.child('userChats/' + currentUser.uid)
-      .on('child_added', userChat => {
-        if (isInitialChatsLoaded) {
-          FIREBASE_REF.child('chats/' + userChat.key)
-          .on('value', chatSnap => {
-            if (isInitialChatsLoaded) {
-              let chat = {id: chatSnap.key, ...chatSnap.val()}
-              dispatch(chatLoaded(chat))
-            }
-          })
-        }
-      })
+    let userChatsRef = FIREBASE_REF.child('userChats/' + currentUser.uid)
+    let userChatsUnsubscribe = userChatsRef.on('child_added', userChat => {
+      if (isInitialChatsLoaded) {
+        let chatsRef = FIREBASE_REF.child('chats/' + userChat.key)
+        let chatsUnsubscribe = chatsRef.on('value', chatSnap => {
+          if (isInitialChatsLoaded) {
+            let chat = {id: chatSnap.key, ...chatSnap.val()}
+            dispatch(chatLoaded(chat))
+          }
+        })
+        dispatch(chatSubscriptionAdded({ref: chatsRef, unsubscribe: chatsUnsubscribe}))
+      }
+    })
+
+    dispatch(chatSubscriptionAdded({ref: userChatsRef, unsubscribe: userChatsUnsubscribe}))
 
     FIREBASE_REF.child('userChats/' + currentUser.uid)
       .once('value').then(userChatsSnapshot => {
@@ -40,17 +43,18 @@ export const loadChats = () => {
           let counter = 1
 
           userChatIds.forEach(chatId => {
-            FIREBASE_REF.child('chats/' + chatId)
-              .on('value', chatSnapshot => {
-                let chat = {id: chatSnapshot.key, ...chatSnapshot.val()}
-                dispatch(chatLoaded(chat))
-                if (counter != userChatIdsCount) {
-                  counter++
-                } else {
-                  isInitialChatsLoaded = true
-                  dispatch(chatInitialLoaded())
-                }
+            let chatsRef = FIREBASE_REF.child('chats/' + chatId)
+            let chatsUnsubscribe = chatsRef.on('value', chatSnapshot => {
+              let chat = {id: chatSnapshot.key, ...chatSnapshot.val()}
+              dispatch(chatLoaded(chat))
+              if (counter != userChatIdsCount) {
+                counter++
+              } else {
+                isInitialChatsLoaded = true
+                dispatch(chatInitialLoaded())
+              }
             })
+            dispatch(chatSubscriptionAdded({ref: chatsRef, unsubscribe: chatsUnsubscribe}))
           })
         } else {
           // if user has no chats
@@ -104,8 +108,9 @@ export const addChat = (chatTitle, userId, emailForAvatarGeneration, memberIds) 
   }
 }
 
-export const unloadChats = () => {
+export const unloadChats = (subscriptions) => {
   return (dispatch) => {
+    subscriptions.forEach(subscription => subscription.ref.off('value', subscription.unsubscribe))
     dispatch(chatLogout())
   }
 }
@@ -123,6 +128,11 @@ const chatInitialLoaded = () => ({
 const chatLoaded = chat => ({
   type: types.CHAT_LOADED,
   chat
+})
+
+const chatSubscriptionAdded = subscription => ({
+  type: types.CHAT_SUBSCRIPTION_ADDED,
+  subscription
 })
 
 const chatAdding = () => ({

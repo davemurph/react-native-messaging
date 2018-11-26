@@ -4,7 +4,8 @@ const initialState = {
   chatsInitialLoading: false,
   isAddingChat: false,
   chats: [],
-  error: null
+  error: null,
+  subscriptions: []
 }
  
 const chat = (state = initialState, action) => {
@@ -25,6 +26,8 @@ const chat = (state = initialState, action) => {
         chats = chatsWithUpdatedChat
       }
       return { ...state, chats: chats }
+    case types.CHAT_SUBSCRIPTION_ADDED:
+      return { ...state, subscriptions: [...state.subscriptions, action.subscription] }
     case types.CHAT_ADDING:
       return { ...state, isAddingChat: true, error: null }
       case types.CHAT_ADD_SUCCESS:
