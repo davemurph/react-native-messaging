@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Alert } from 'react-native'
 
 import { Button } from 'react-native-elements'
  
@@ -8,9 +9,18 @@ class LogoutButtonComponent extends Component {
     super(props)
 
     this.logoutAndCleanUp = () => {
-      this.props.unloadChats();
-      this.props.cleanUpUsersOnLogout();
-      this.props.logout();
+      Alert.alert(
+        'Ah come off it lad...',
+        'Are you sure you want to log out?',
+        [
+          { text: 'Cancel' },
+          { text: 'OK', onPress: () => {
+            this.props.unloadChats()
+            this.props.cleanUpUsersOnLogout()
+            this.props.logout()
+          }}
+        ]
+      )
     }
   }
 
