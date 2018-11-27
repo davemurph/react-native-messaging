@@ -12,7 +12,7 @@ const FIREBASE_REF_CHATS = firebaseService.database().ref('chats')
 // The inner function receives the store methods dispatch and getState as parameters
 // TODO: Pass in userId here to save auth call?
 export const loadChats = () => {
-  return(dispatch) => {
+  return (dispatch) => {
     dispatch(chatInitialLoading())
 
     let currentUser = firebaseService.auth().currentUser

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import UserComponent from './Component'
 
@@ -17,6 +18,10 @@ class UserContainer extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isUpdating: state.user.isUpdating
+})
+
 UserContainer.propTypes = {
   user: PropTypes.object.isRequired,
   onPressUser: PropTypes.func.isRequired,
@@ -25,4 +30,4 @@ UserContainer.propTypes = {
   isUpdating: PropTypes.bool.isRequired
 }
 
-export default UserContainer
+export default connect(mapStateToProps)(UserContainer)

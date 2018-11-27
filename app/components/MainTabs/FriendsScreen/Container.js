@@ -24,15 +24,14 @@ class FriendsContainer extends Component {
         users={users}
         thisUser={this.props.thisUser}
         addFriend={this.props.addFriend}
-        isUpdating={this.props.usersIsDBInteracting} />
+        error={this.props.error} />
   }
 }
 
 const mapStateToProps = state => ({
-  usersIsDBInteracting: state.user.isDBInteracting,
   users: state.user.users,
-  thisUser: state.user.thisUser, //TODO: assuming always have a user here?????
-  usersError: state.user.error
+  thisUser: state.user.thisUser,
+  error: state.user.error
 })
 
 const mapDispatchToProps = {
@@ -40,10 +39,9 @@ const mapDispatchToProps = {
 }
  
 FriendsContainer.propTypes = {
-  usersIsDBInteracting: PropTypes.bool.isRequired,
   users: PropTypes.object,
   thisUser: PropTypes.object,
-  usersError: PropTypes.string
+  error: PropTypes.string
 }
  
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsContainer)

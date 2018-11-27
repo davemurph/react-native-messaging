@@ -19,19 +19,23 @@ class FriendsComponent extends Component {
 
     this.addFriend = (friendId, friendUsername) => {
       this.props.addFriend(friendId)
-      Alert.alert('Well done...', `${friendUsername} is now your friend`) // TODO: Fix so only displays if actual success!!!
+        .then(() => {
+          if (!this.props.error) {
+            Alert.alert('Well done...', `${friendUsername} is now your friend`)
+          } else {
+            Alert.alert('Unlucky, something happened...', this.props.error)
+          }
+        })
     }
 
     this.renderItem = ({item}) => {
       let isShowingFriends = this.state.selectedIndex === 0 ? true : false;
 
       return <User
-        user={item}
-        onPressUser={() => Alert.alert('Hello ' + item.username, 'another bit...')}
-        isExistingFriend={isShowingFriends}
-        onPressAddFriend={() => this.addFriend(item.id, item.username)}
-        isUpdating={this.props.isUpdating}
-      />
+              user={item}
+              onPressUser={() => Alert.alert(item.username, 'some useful info...')}
+              isExistingFriend={isShowingFriends}
+              onPressAddFriend={() => this.addFriend(item.id, item.username)} />
     }
 
     this.renderSeparator = () => {
@@ -81,7 +85,8 @@ class FriendsComponent extends Component {
 
 FriendsComponent.propTypes = {
   users: PropTypes.array.isRequired,
-  thisUser: PropTypes.object
+  thisUser: PropTypes.object,
+  error: PropTypes.string
 }
 
 export default FriendsComponent

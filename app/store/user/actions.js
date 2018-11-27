@@ -3,9 +3,9 @@ import firebaseService from '../../services/firebase'
 
 const FIREBASE_REF_USERS = firebaseService.database().ref('users')
 
-export const addUserDBListeners = () => {
+export const loadUsers = () => {
   return (dispatch) => {
-    dispatch(userDBInteracting())
+    dispatch(userLoading())
     
     let unsubscribe = FIREBASE_REF_USERS.on('value', (snapshot) => {
       let users = snapshot.val()
@@ -29,14 +29,14 @@ export const addUserDBListeners = () => {
 
 export const addFriend = (friendId) => {
   return (dispatch) => {
-    dispatch(userDBInteracting())
+    dispatch(userUpdating())
 
     let thisUserId = firebaseService.auth().currentUser.uid  
     let updates = {}
     updates[thisUserId + '/friends/' + friendId] = true
     updates[friendId + '/friends/' + thisUserId] = true
   
-    FIREBASE_REF_USERS.update(updates, error => {
+    return FIREBASE_REF_USERS.update(updates, error => {
       // this is an atomic operation
       if (error) {
         dispatch(userError(error))
@@ -55,14 +55,18 @@ export const cleanUpUsersOnLogout = (subscription) => {
   }
 }
 
-const userDBInteracting = () => ({
-  type: types.USER_DB_INTERACTING
+const userLoading = () => ({
+  type: types.USER_LOADING
 })
 
 const userLoadSuccess = (users, thisUser) => ({
   type: types.USER_LOAD_SUCCESS,
   users,
   thisUser
+})
+
+const userUpdating = () => ({
+  type: types.USER_UPDATING
 })
 
 const userUpdateSuccess = () => ({

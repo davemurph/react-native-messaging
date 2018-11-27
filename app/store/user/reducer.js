@@ -1,7 +1,8 @@
 import * as types from './actionTypes'
  
 const initialState = {
-  isDBInteracting: false,
+  isLoading: false,
+  isUpdating: false,
   error: null,
   users: {},
   thisUser: null,
@@ -10,16 +11,18 @@ const initialState = {
  
 const user = (state = initialState, action) => {
   switch(action.type) {
-    case types.USER_DB_INTERACTING:
-      return { ...state, isDBInteracting: true }
+    case types.USER_LOADING:
+      return { ...state, isLoading: true }
     case types.USER_LOAD_SUCCESS:
-      return { ...state, isDBInteracting: false, users: action.users, thisUser: action.thisUser, error: null }
+      return { ...state, isLoading: false, users: action.users, thisUser: action.thisUser, error: null }
+    case types.USER_UPDATING:
+      return { ...state, isUpdating: true }
     case types.USER_UPDATE_SUCCESS:
-      return { ...state, isDBInteracting: false, error: null }
+      return { ...state, isUpdating: false, error: null }
     case types.USER_SUBSCRIPTION_ADDED:
       return { ...state, subscription: action.subscription }
     case types.USER_ERROR:
-      return { ...state, isDBInteracting: false, error: action.error }
+      return { ...state, isLoading: false, isUpdating:false, error: action.error }
     case types.USER_LOGOUT:
       return initialState
     default:

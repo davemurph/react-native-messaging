@@ -20,15 +20,14 @@ class UserComponent extends Component {
       />
 
     return <ListItem
-      title={this.props.user.username}
-      subtitle={this.props.user.email}
-      leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: {uri: this.props.user.avatarUrl}}}
-      onPress={this.props.onPressUser}
-      chevron={this.props.isExistingFriend}
-      rightElement={this.props.isExistingFriend ? null : button}
-      onPressRightIcon={this.props.onPressAddFriend}
-      disabled={this.props.isUpdating}
-    />
+            title={this.props.user.username}
+            subtitle={this.props.user.email}
+            leftAvatar={{overlayContainerStyle:{backgroundColor: '#fff'}, source: {uri: this.props.user.avatarUrl}}}
+            onPress={this.props.onPressUser}
+            chevron={this.props.isExistingFriend}
+            rightElement={this.props.isExistingFriend ? null : button}
+            onPressRightIcon={this.props.onPressAddFriend}
+            disabled={this.props.isUpdating} />
   }  
 }
 
