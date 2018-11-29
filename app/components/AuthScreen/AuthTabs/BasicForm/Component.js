@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, TextInput, TouchableOpacity, Text } from 'react-native'
+import { TextInput, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native'
  
 import translations from '../../../../i18n'
  
@@ -46,9 +46,7 @@ class BasicFormComponent extends Component {
     let usernameFieldToDisplay = this.props.isSignUp ? usernameField : null
 
     return (
-      <View
-        style={styles.container}>
-
+      <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={-100}>
         {usernameFieldToDisplay}
  
         <TextInput
@@ -73,12 +71,10 @@ class BasicFormComponent extends Component {
         <TouchableOpacity
           style={styles.button}
           onPress={this.handleButtonPress}>
- 
           <Text style={styles.buttonTitle}>{this.props.buttonTitle}</Text>
- 
         </TouchableOpacity>
  
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

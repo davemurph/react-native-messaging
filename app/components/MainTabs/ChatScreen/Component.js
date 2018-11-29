@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { KeyboardAvoidingView, Text } from 'react-native'
+import { KeyboardAvoidingView } from 'react-native'
 import PropTypes from 'prop-types'
  
 import MessagesList from './MessagesList'
@@ -12,7 +12,7 @@ class ChatScreenComponent extends Component {
     return <KeyboardAvoidingView
       style={styles.container}
       behavior='padding'
-      keyboardVerticalOffset={64}>
+      keyboardVerticalOffset={75}>
     <MessagesList chatId={this.props.chatId} />
     <MessageForm chatId={this.props.chatId} />
   </KeyboardAvoidingView>

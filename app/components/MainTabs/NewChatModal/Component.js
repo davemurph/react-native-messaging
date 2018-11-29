@@ -7,7 +7,6 @@ import translations from '../../../i18n'
 import { Button, Input, Divider } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
-// TODO: CONTAINER.....
 import UserWithCheckBox from './UserWithCheckBox'
 import CreateNewChatButton from './Button' 
 import styles from './Styles'
