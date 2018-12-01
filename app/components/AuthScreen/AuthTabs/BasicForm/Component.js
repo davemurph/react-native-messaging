@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { TextInput, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native'
+import { TextInput, TouchableOpacity, Text, KeyboardAvoidingView, Image, View } from 'react-native'
  
 import translations from '../../../../i18n'
  
@@ -47,32 +47,39 @@ class BasicFormComponent extends Component {
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={-100}>
-        {usernameFieldToDisplay}
- 
-        <TextInput
-          style={styles.textInput}
-          placeholder={translations.t('email')}
-          returnKeyType='next'
-          keyboardType='email-address'
-          autoCapitalize='none'
-          onChangeText={this.handleEmailChange}
-          value={this.state.email}
-          underlineColorAndroid={'transparent'} />
- 
-        <TextInput
-          style={styles.textInput}
-          placeholder={translations.t('password')}
-          secureTextEntry={true}
-          returnKeyType='done'
-          onChangeText={this.handlePasswordChange}
-          value={this.state.password}
-          underlineColorAndroid={'transparent'} />
- 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={this.handleButtonPress}>
-          <Text style={styles.buttonTitle}>{this.props.buttonTitle}</Text>
-        </TouchableOpacity>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('./../../../../images/form.png')}
+            style={styles.image} />
+        </View>
+        <View style={styles.formContainer}>
+          {usernameFieldToDisplay}
+  
+          <TextInput
+            style={styles.textInput}
+            placeholder={translations.t('email')}
+            returnKeyType='next'
+            keyboardType='email-address'
+            autoCapitalize='none'
+            onChangeText={this.handleEmailChange}
+            value={this.state.email}
+            underlineColorAndroid={'transparent'} />
+  
+          <TextInput
+            style={styles.textInput}
+            placeholder={translations.t('password')}
+            secureTextEntry={true}
+            returnKeyType='done'
+            onChangeText={this.handlePasswordChange}
+            value={this.state.password}
+            underlineColorAndroid={'transparent'} />
+  
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.handleButtonPress}>
+            <Text style={styles.buttonTitle}>{this.props.buttonTitle}</Text>
+          </TouchableOpacity>
+        </View>
  
       </KeyboardAvoidingView>
     )

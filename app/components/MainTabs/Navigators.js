@@ -77,6 +77,9 @@ const DashboardTabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: '#478dff',
       inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: '#fafafa',
+      },
     },
     // https://github.com/react-navigation/react-navigation/issues/4146
     // animationEnabled: true, These don't work with createBottomTabNavigator in new react-nav

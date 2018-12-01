@@ -3,8 +3,13 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'stretch',
-    justifyContent:'center',
+    justifyContent: 'center'
+  },
+  imageContainer: {
+    alignItems: 'center'
+  },
+  formContainer: {
+    alignItems: 'stretch'
   },
   textInput: {
     backgroundColor: '#ffffff',
@@ -26,5 +31,9 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  image: {
+    width: 150,
+    height: 150
   }
 })
