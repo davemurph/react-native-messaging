@@ -7,8 +7,6 @@ import { configureStore } from './store'
 
 import ChatApp from './components/ChatApp'
 
-Expo.Asset.fromModule(require("../app/images/form.png")).downloadAsync()
-
 console.ignoredYellowBox = ['Setting a timer']
 YellowBox.ignoreWarnings(['Setting a timer'])
 
