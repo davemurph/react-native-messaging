@@ -73,7 +73,9 @@ class FriendsComponent extends Component {
         />
         <FlatList
           keyExtractor={(item, index) => item.id}
-          removeClippedSubviews
+          // https://github.com/facebook/react-native/issues/13316 - set removeClippedSubviews={false} to fix ios
+          // bug where list disappears in navigator when flicking between tabs
+          removeClippedSubviews={false}
           data={data}
           renderItem={this.renderItem}
           ListEmptyComponent={this.emptyList}

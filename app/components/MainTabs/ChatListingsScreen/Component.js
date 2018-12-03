@@ -68,7 +68,7 @@ class ChatListingsComponent extends Component {
 
         <FlatList
           keyExtractor={(item, index) => index.toString()}
-          removeClippedSubviews
+          removeClippedSubviews={false}
           contentContainerStyle={contentContainerStyle}
           data={this.props.data}
           renderItem={this.renderItem}
